@@ -24,8 +24,5 @@ $loggedIn = isset($_SESSION['username']);
         <a href="form.php"><button class="button3">Menu</button></a>
 </div>
 
-</div>
-</div>
-
 </body>
 </html>
