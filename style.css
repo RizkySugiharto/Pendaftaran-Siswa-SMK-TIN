@@ -1,0 +1,330 @@
+:root
+{
+    --primary: #003F8F;
+}
+*
+    {
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    padding: 0;
+    margin: 0;
+    font-family: inter;
+    scrollbar-width: none !important;
+    scrollbar-color: unset !important;
+    transition: .2s;
+    }
+
+a
+    {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: bold;
+    }
+
+p
+    {
+    color: #000000;
+    font-family: inter;
+    }
+
+h1
+    {
+    color: #000000;
+    font-family: inter;
+    }
+
+body
+    {
+    box-sizing: border-box;
+    height: 100vh;
+    width: 100vw;
+    background-color: #ffffff;
+    }
+
+
+
+.button
+    {
+    background-color: var(--primary);
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    padding: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
+    cursor: pointer;
+    outline: 2px solid var(--primary);
+    text-align: center;
+    }
+
+    .button:hover
+    {
+    filter: brightness(1.2);
+}
+
+.button2
+    {
+    background-color: #fff;
+    color: var(--primary);
+    border: none;
+    border-radius: 2px;
+    font-weight: 600;
+    padding: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
+    cursor: pointer;
+    text-align: center;
+    outline: 2px solid #ffffff;
+    }
+
+.button2:hover
+{
+    filter: brightness(0.8);
+}
+
+.button3
+    {
+    display: flex;
+    justify-content: space-between;
+    background-color: #ffffff;
+    outline: 2px solid var(--primary);
+    color: var(--primary);
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 15px 5px 15px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.button4
+{
+    background-color: #ffffff00;
+    text-align: center;
+    outline: 2px solid #ffffff;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    padding: 2px;
+    padding-left: 15px;
+    padding-right: 15px;
+    cursor: pointer;
+    }
+
+
+
+
+
+
+
+.logo
+    {
+    font-family: Croc, "Coming Soon";
+    font-weight: 500;
+    color: #ffffff;
+    }
+
+.navbar
+    {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px 15px;
+    background-color: var(--primary);
+    box-shadow: 0 0 5px 1px #00000027;
+    box-sizing: border-box;
+    }
+
+.navbar .left,
+.navbar .right 
+{
+    display: flex;
+    align-content: center;
+}
+.navbar .left
+{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.navbar .left p:hover
+{
+    border-bottom: 5px solid var(--primary);
+}
+.navbar .left a p
+{
+    font-weight: 500;
+    color: var(--primary);
+}
+.navbar .right
+{
+    align-items: center;
+    gap: 20px;
+}
+
+.section
+{
+    width: 100vw;
+    height: 100vh;
+    box-sizing: border-box;
+    padding: 10px;
+    text-align: center;
+}
+.section img
+{
+    width: 50%;
+}
+.section a
+{
+    text-align: center;
+}
+.section a button
+{
+    padding: 10px 90px 10px 90px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.section a button:hover
+{
+    background-color: var(--primary);
+    color: #fff;
+}
+
+
+
+#formphp body .content
+{
+    display: flex;
+    flex-direction: column;
+    padding: 40px 30px 40px 30px;
+    box-sizing: border-box;
+}
+#formphp body .content .sections
+{
+    display: flex;
+    flex-direction: row;
+}
+#formphp body .content .sections .sect
+{
+    width: 50%;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+#formphp body .content .sections .sect .div
+{   
+    margin-bottom: 30px;
+    flex-direction: column;
+    display: flex;
+    gap: 10px;
+}
+#formphp body .content .sections .sect .div label
+{
+    font-size: 20px;
+}
+#formphp body .content .sections .sect .div label span
+{
+    font-size: 12px;
+}
+#formphp body .content .sections .sect .div .input
+{
+    height: 40px;
+    width: 60%;
+    padding: 0 10px;
+    box-sizing: border-box;
+    outline: none;
+    border: none;
+    border: 2px solid #003e8f00;
+    border-bottom: 2px solid #003F8F;
+    border-radius: 3px;
+}
+#formphp body .content .sections .sect .div .input:focus
+{
+    border: 2px solid #003F8F;
+    
+}
+#formphp body .content .sections .sect .div .radio
+{
+    gap: 10px;
+    display: flex;
+    box-sizing: border-box;
+    padding: 7px 0;
+}
+#formphp body .content .sections .sect .div .radio div
+{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+#formphp body .content .sections .sect .div .radio div input
+{
+    width: 100px;
+}
+
+
+
+
+#formphp body .content input[type="submit"]
+{
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    text-align: end;
+}
+
+@media only screen and (max-width: 768px) 
+{
+    .navbar .left
+    {
+        align-items: center;
+    }
+    .logo
+    {
+        font-size: 5vw;
+    }
+    .section
+    {
+        flex-direction: column;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    .section .left
+    {
+        width: 100%;
+        height: 40%;
+    }
+    .section .right
+    {
+        height: 70%;
+        width: 100%;
+    }
+
+    .navbar .right form button img
+    {
+        display: none;
+    }
+
+    .navbar .left a p
+    {
+        display: none;
+    }
+    #formphp body .content .sections
+    {
+        flex-direction: column;
+    }
+    #formphp body .content .sections .sect
+    {
+        width: 100%;
+    }
+    #formphp body .content .sections .sect div .input
+    {
+        width: 100% !important;
+    }
+
+}
