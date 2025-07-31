@@ -13,7 +13,10 @@ class FormPendaftaran extends StatefulWidget {
 
 class _FormPendaftaranState extends State<FormPendaftaran> {
   HashMap<String, String> dataSiswa = HashMap();
-
+  HashMap<String, String> erorrMessage = HashMap.from({
+    "message": "data NIK tidak valid",
+    "name": "nik",
+  });
   String gender = "L";
   String guard = "A";
   var selectedMajor = [];
@@ -77,9 +80,9 @@ class _FormPendaftaranState extends State<FormPendaftaran> {
               ),
               _textField(
                 context,
-                "Tanggal Lahir (tanggal/bulan/tahun)",
-                "10/07/08",
-                "date_of_birth",
+                "Tanggal Lahir (tahun/bulan/tanggal)",
+                "2008/07/31",
+                "date_birth",
               ),
               _textField(context, "Email", "johndoe@gmail.com", "email"),
               _textField(context, "Nomor Telepon", "081212120123", "no_telp"),
@@ -98,46 +101,25 @@ class _FormPendaftaranState extends State<FormPendaftaran> {
               _genderGroup(context),
               _majorGroupButton(context),
               SizedBox(height: 10.0),
-              SizedBox(
-                width: MediaQuery.of(context).size.width - 40.0,
-                child: _labelText("Data Wali Murid", false),
-              ),
-              SizedBox(
-                width: MediaQuery.of(context).size.width - 40,
-                child: Row(
-                  children: [
-                    _guardButton("A"), // A = ayah
-                    _guardButton("B"), // B = Ibu,
-                    _guardButton("C"), // C = Other
-                  ],
-                ),
-              ),
-              guard == "C"
-                  ? _textField(
-                    context,
-                    "Siapa Yang Akan Menjadi Walimu?",
-                    "Paman/Bibi/Kakek/Nenek/Kakak",
-                    "guard_type",
-                  )
-                  : SizedBox(),
+              _dataWaliMurid(context, false),
               _textField(
                 context,
                 "Nama",
                 "Masukkan Nama Wali Murid",
-                "guard_name",
+                "parent_name",
               ),
               _textField(
                 context,
                 "Email",
                 "Masukkan alamat email",
-                "guard_email",
+                "parent_email",
                 false,
               ),
               _textField(
                 context,
                 "Nomor Telepon",
                 "Masukkan nomor telepon yang dapat dihubungi",
-                "guard_no_telp",
+                "parent_no_telp",
               ),
               SizedBox(
                 width: MediaQuery.of(context).size.width - 40.0,
@@ -151,6 +133,49 @@ class _FormPendaftaranState extends State<FormPendaftaran> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  SizedBox _dataWaliMurid(BuildContext context, bool load) {
+    return SizedBox(
+      width: MediaQuery.of(context).size.width - 40.0,
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+                "Data Wali Siswa",
+                style: TextStyle(
+                  fontFamily: "Poppins",
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+          load
+              ? SizedBox(
+                width: MediaQuery.of(context).size.width - 40,
+                child: Row(
+                  children: [
+                    _guardButton("A"), // A = ayah
+                    _guardButton("B"), // B = Ibu,
+                    _guardButton("C"), // C = Other
+                  ],
+                ),
+              )
+              : SizedBox(),
+          guard == "C"
+              ? _textField(
+                context,
+                "Siapa Yang Akan Menjadi Walimu?",
+                "Paman/Bibi/Kakek/Nenek/Kakak",
+                "parent_type",
+              )
+              : SizedBox(),
+        ],
       ),
     );
   }
@@ -320,24 +345,44 @@ class _FormPendaftaranState extends State<FormPendaftaran> {
             onChanged: (String value) => dataSiswa[keyName] = value,
           ),
         ),
+        erorrMessage["name"] == keyName
+            ? SizedBox(
+              width: MediaQuery.of(context).size.width - 40.0,
+              child: _labelText(
+                erorrMessage["message"]!,
+                false,
+                16.0,
+                Colors.red,
+              ),
+            )
+            : SizedBox(),
       ],
     );
   }
 
-  Row _labelText(String labelText, [bool? isMustFill = true]) {
+  Row _labelText(
+    String labelText, [
+    bool? isMustFill = true,
+    double? fontSize = 18.0,
+    Color? textColor,
+  ]) {
     return Row(
       children: [
         Text(
           labelText,
-          style: TextStyle(fontFamily: "Poppins", fontSize: 16.0),
+          style: TextStyle(
+            fontFamily: "Poppins",
+            fontSize: 16.0,
+            color: textColor ?? Colors.black,
+          ),
         ),
         isMustFill != null && isMustFill
             ? Text(
               "*",
               style: TextStyle(
                 fontFamily: "Poppins",
-                fontSize: 18.0,
-                color: Color(0xFF003F8F),
+                fontSize: fontSize,
+                color: textColor ?? Color(0xFF003F8F),
               ),
             )
             : Text(''),
