@@ -2,9 +2,9 @@
 
 namespace App;
 
-enum CandidateStatus
+enum CandidateStatus: string
 {
-    case UNVERIFIED = 'unverified';
-    case VERIFIED = 'verified';
-    case ACTIVE = 'active';
+    case UNVERIFIED = "unverified";
+    case VERIFIED = "verified";
+    case ACTIVE = "active";
 }

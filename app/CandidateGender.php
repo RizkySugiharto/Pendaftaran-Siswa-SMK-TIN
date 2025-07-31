@@ -2,8 +2,8 @@
 
 namespace App;
 
-enum CandidateGender
+enum CandidateGender: string
 {
-    case MALE = 'male';
-    case FEMALE = 'female';
+    case MALE = "male";
+    case FEMALE = "female";
 }

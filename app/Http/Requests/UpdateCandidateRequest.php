@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class UpdateCandidateRequest extends FormRequest
 {
@@ -22,7 +23,20 @@ class UpdateCandidateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'nik' => 'required|string|min:16|max:16',
+            'fullname' => 'required|string|max:120',
+            'email' => 'required|string|email|max:255',
+            'no_telp' => 'required|string|min:12|max:12',
+            'address' => 'required|string',
+            'prev_school' => 'required|string|max:120',
+            'parent_name' => 'required|string|max:120',
+            'parent_telp' => 'required|string|min:12|max:12',
+            'parent_email' => 'required|string|email|max:255',
+            'major' => 'required|string|max:255',
+            'birth_date' => 'required|date',
+            'phase' => 'required|integer',
+            'status' => 'required|string|in:unverified,verified,active',
+            'gender' => 'required|string|in:male,female',
         ];
     }
 }

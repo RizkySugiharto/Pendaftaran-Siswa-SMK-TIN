@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Candidate;
 use App\Http\Requests\StoreCandidateRequest;
 use App\Http\Requests\UpdateCandidateRequest;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Client\Request;
 
 class CandidateController extends Controller
@@ -16,7 +16,7 @@ class CandidateController extends Controller
     public function index()
     {
         if (!Auth::check()) {
-            return redirect("");
+            return redirect()->route("admin.login");
         }
 
         $candidates = Candidate::all();
@@ -36,13 +36,18 @@ class CandidateController extends Controller
      */
     public function store(StoreCandidateRequest $request)
     {
-        $candidate = Candidate::create($request->validated());
+        $candidate = new Candidate([
+            ...$request->validated(),
+            'status' => "unverified",
+            'submit_date' => now(),
+            'phase' => 1,
+        ]);
         $is_success = $candidate->save();
 
         if ($is_success) {
-            return redirect("");
+            return redirect()->route("");
         } else {
-            return redirect("");
+            return redirect()->route("");
         }
     }
 
@@ -69,9 +74,9 @@ class CandidateController extends Controller
     {
         $is_success = $candidate->update($request->validated());
         if ($is_success) {
-            return redirect("")->withInput([]);
+            return redirect()->route("")->withInput([]);
         } else {
-            return redirect("");
+            return redirect()->route("");;
         }
     }
 
@@ -82,9 +87,9 @@ class CandidateController extends Controller
     {
         $is_success = $candidate->delete();
         if ($is_success) {
-            return redirect("");
+            return redirect()->route("");;
         } else {
-            return redirect("");
+            return redirect()->route("");;
         }
     }
 }
