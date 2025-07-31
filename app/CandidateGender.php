@@ -2,7 +2,7 @@
 
 namespace App;
 
-enum CandidateSex
+enum CandidateGender
 {
     case MALE = 'male';
     case FEMALE = 'female';

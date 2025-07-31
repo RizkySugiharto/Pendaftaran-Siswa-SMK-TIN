@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Candidate;
 use App\Http\Requests\StoreCandidateRequest;
 use App\Http\Requests\UpdateCandidateRequest;
+use Auth;
+use Illuminate\Http\Client\Request;
 
 class CandidateController extends Controller
 {
@@ -13,15 +15,20 @@ class CandidateController extends Controller
      */
     public function index()
     {
-        //
+        if (!Auth::check()) {
+            return redirect("");
+        }
+
+        $candidates = Candidate::all();
+        return view("admin/candidates", ["candidates" => $candidates]);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        return view("form_psb");
     }
 
     /**
@@ -29,7 +36,14 @@ class CandidateController extends Controller
      */
     public function store(StoreCandidateRequest $request)
     {
-        //
+        $candidate = Candidate::create($request->validated());
+        $is_success = $candidate->save();
+
+        if ($is_success) {
+            return redirect("");
+        } else {
+            return redirect("");
+        }
     }
 
     /**
@@ -53,7 +67,12 @@ class CandidateController extends Controller
      */
     public function update(UpdateCandidateRequest $request, Candidate $candidate)
     {
-        //
+        $is_success = $candidate->update($request->validated());
+        if ($is_success) {
+            return redirect("")->withInput([]);
+        } else {
+            return redirect("");
+        }
     }
 
     /**
@@ -61,6 +80,11 @@ class CandidateController extends Controller
      */
     public function destroy(Candidate $candidate)
     {
-        //
+        $is_success = $candidate->delete();
+        if ($is_success) {
+            return redirect("");
+        } else {
+            return redirect("");
+        }
     }
 }

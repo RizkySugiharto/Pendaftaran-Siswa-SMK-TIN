@@ -24,8 +24,8 @@ return new class extends Migration
             $table->string('major', 255)->comment('bisa lebih dari 1 dan maksimal 3');
             $table->date('submit_date');
             $table->date('birth_date');
-            $table->integer('phase')->comment('1: gelombang 1, 4: gelombang extra');
-            $table->enum('sex', ['male', 'female']);
+            $table->integer(column: 'phase')->comment('1: gelombang 1, 4: gelombang extra');
+            $table->enum('gender', ['male', 'female']);
             $table->enum('status', ['unverified', 'verified', 'active'])->default('unverified');
         });
     }

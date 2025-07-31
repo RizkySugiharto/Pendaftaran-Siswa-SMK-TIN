@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\CandidateSex;
+use App\CandidateGender;
 use App\CandidateStatus;
 use Illuminate\Database\Eloquent\Model;
 
@@ -29,7 +29,7 @@ class Candidate extends Model
         'birth_date',
         'phase',
         'status',
-        'sex',
+        'gender',
     ];
 
     protected function casts(): array {
@@ -37,7 +37,7 @@ class Candidate extends Model
             'submit_date' => 'datetime',
             'birth_date' => 'date',
             'status' => CandidateStatus::class,
-            'sex' => CandidateSex::class,
+            'gender' => CandidateGender::class,
         ];
     }
 }
