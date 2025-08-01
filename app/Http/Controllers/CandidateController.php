@@ -7,6 +7,7 @@ use App\Http\Requests\StoreCandidateRequest;
 use App\Http\Requests\UpdateCandidateRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Client\Request;
+use Session;
 
 class CandidateController extends Controller
 {
@@ -26,7 +27,7 @@ class CandidateController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(Request $request)
+    public function create()
     {
         return view("form_psb");
     }
@@ -36,19 +37,15 @@ class CandidateController extends Controller
      */
     public function store(StoreCandidateRequest $request)
     {
+        session()->flash("alert-message","Test");
         $candidate = new Candidate([
             ...$request->validated(),
             'status' => "unverified",
             'submit_date' => now(),
             'phase' => 1,
         ]);
-        $is_success = $candidate->save();
-
-        if ($is_success) {
-            return redirect()->route("");
-        } else {
-            return redirect()->route("");
-        }
+            $is_success = $candidate->save();
+            return redirect()->route("form-psb")->with(["message" => "Pendaftaran Berhasil!"]);
     }
 
     /**
