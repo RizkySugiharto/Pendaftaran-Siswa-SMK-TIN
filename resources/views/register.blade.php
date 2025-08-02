@@ -29,7 +29,8 @@
                 <div class="div">
                     <label for="nik">NIK <span>(Nomor Induk Kependudukan)</span></label>
                     <input class="input" type="text" inputmode="numeric" name="nik" id="nik"
-                        placeholder="Masukkan NIK berupa 16 angka" minlength="16" maxlength="16" required>
+                        placeholder="Masukkan NIK berupa 16 angka" minlength="16" maxlength="16" required oninput="document.getElementById('nikError').innerText = NIKFormatter.validate(this.value) ? '' : 'NIK tidak valid!'">
+                    <p style="color: red; font-size: 12px;" id="nikError"></p>
                 </div>
                 <div class="div">
                     <label for="fullname">Nama Lengkap</label>
@@ -113,8 +114,8 @@
         <input type="submit" class="button3" value="Submit">
     </form>
 
-    @includeWhen($errors->any(), 'components.error_message');
-    @includeWhen(Session::has("message"),'components.success_message');
+    @includeWhen($errors->any(), 'components._error-message');
+    @includeWhen(Session::has("message"),'components._success-message');
 
     <script>
         function setupMultiSelect(groupId, inputId, maxSelections = 3) {
@@ -175,6 +176,7 @@
         setupRadioButtons('genderRadioGroup', 'genderInput');
     </script>
 
+    @vite(['resources/js/app.js'])
 </body>
 
 </html>

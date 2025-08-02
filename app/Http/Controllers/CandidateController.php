@@ -6,8 +6,6 @@ use App\Models\Candidate;
 use App\Http\Requests\StoreCandidateRequest;
 use App\Http\Requests\UpdateCandidateRequest;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Client\Request;
-use Session;
 
 class CandidateController extends Controller
 {
@@ -17,7 +15,7 @@ class CandidateController extends Controller
     public function index()
     {
         if (!Auth::check()) {
-            return redirect()->route("admin.login");
+            return redirect()->route("index");
         }
 
         $candidates = Candidate::all();
@@ -29,7 +27,7 @@ class CandidateController extends Controller
      */
     public function create()
     {
-        return view("form_psb");
+        return view("register");
     }
 
     /**
@@ -37,31 +35,28 @@ class CandidateController extends Controller
      */
     public function store(StoreCandidateRequest $request)
     {
-        session()->flash("alert-message","Test");
+        $candidate = Candidate::where(
+            column: ["nik" => $request->nik, "email" => $request->email, "no_telp" => $request->no_telp],
+            boolean: 'or'
+        )->first();
+
+        if ($candidate) {
+            return redirect()->back()->withErrors(["Anda sudah terdaftar!"]);
+        }
+
         $candidate = new Candidate([
             ...$request->validated(),
             'status' => "unverified",
             'submit_date' => now(),
             'phase' => 1,
         ]);
-            $is_success = $candidate->save();
-            return redirect()->route("form-psb")->with(["message" => "Pendaftaran Berhasil!"]);
-    }
+        $is_success = $candidate->save();
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Candidate $candidate)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Candidate $candidate)
-    {
-        //
+        if ($is_success) {
+            return redirect()->back()->with(["message" => "Pendaftaran Berhasil!"]);
+        } else {
+            return redirect()->back()->withErrors(["Pendaftaran gagal disimpan!"]);
+        }
     }
 
     /**
@@ -71,9 +66,9 @@ class CandidateController extends Controller
     {
         $is_success = $candidate->update($request->validated());
         if ($is_success) {
-            return redirect()->route("")->withInput([]);
+            return redirect()->back()->withInput(["message" => "Data calon siswa berhasil diperbarui!"]);
         } else {
-            return redirect()->route("");;
+            return redirect()->back()->withErrors(["Data gagal diperbarui!"]);
         }
     }
 
@@ -82,11 +77,15 @@ class CandidateController extends Controller
      */
     public function destroy(Candidate $candidate)
     {
+        if (!Auth::check()) {
+            return redirect()->route("index");
+        }
+
         $is_success = $candidate->delete();
         if ($is_success) {
-            return redirect()->route("");;
+            return redirect()->back()->withInput(["message" => "Data calon siswa berhasil dihapus!"]);
         } else {
-            return redirect()->route("");;
+            return redirect()->back()->withErrors(["Data gagal dihapus!"]);
         }
     }
 }
