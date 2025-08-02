@@ -6,6 +6,7 @@ use App\Models\Candidate;
 use App\Http\Requests\StoreCandidateRequest;
 use App\Http\Requests\UpdateCandidateRequest;
 use Illuminate\Support\Facades\Auth;
+use Symfony\Component\Console\Input\Input;
 
 class CandidateController extends Controller
 {
@@ -35,27 +36,32 @@ class CandidateController extends Controller
      */
     public function store(StoreCandidateRequest $request)
     {
-        $candidate = Candidate::where(
-            column: ["nik" => $request->nik, "email" => $request->email, "no_telp" => $request->no_telp],
-            boolean: 'or'
-        )->first();
 
-        if ($candidate) {
-            return redirect()->back()->withErrors(["Anda sudah terdaftar!"]);
-        }
+        if ($request->input("nik_validate") == "true") {
+            $candidate = Candidate::where(
+                column: ["nik" => $request->nik, "email" => $request->email, "no_telp" => $request->no_telp],
+                boolean: 'or'
+            )->first();
 
-        $candidate = new Candidate([
-            ...$request->validated(),
-            'status' => "unverified",
-            'submit_date' => now(),
-            'phase' => 1,
-        ]);
-        $is_success = $candidate->save();
+            if ($candidate) {
+                return redirect()->back()->withErrors(["Anda sudah terdaftar!"]);
+            }
 
-        if ($is_success) {
-            return redirect()->back()->with(["message" => "Pendaftaran Berhasil!"]);
+            $candidate = new Candidate([
+                ...$request->validated(),
+                'status' => "unverified",
+                'submit_date' => now(),
+                'phase' => 1,
+            ]);
+            $is_success = $candidate->save();
+
+            if ($is_success) {
+                return redirect()->back()->with(["message" => "Pendaftaran Berhasil!"]);
+            } else {
+                return redirect()->back()->withInput($request->all())->withErrors(["Pendaftaran gagal disimpan!"]);
+            }
         } else {
-            return redirect()->back()->withErrors(["Pendaftaran gagal disimpan!"]);
+            return redirect()->back()->withInput($request->all())->withErrors(["Masukkan NIK yang valid!"]);
         }
     }
 
