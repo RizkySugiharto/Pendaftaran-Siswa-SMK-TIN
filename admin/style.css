@@ -1,0 +1,766 @@
+:root
+{
+    --primary: #003F8F;
+}
+*
+    {
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    padding: 0;
+    margin: 0;
+    font-family: inter;
+    scrollbar-width: none !important;
+    scrollbar-color: unset !important;
+    transition: .2s;
+    }
+
+a
+    {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: bold;
+    }
+
+p
+    {
+    color: #000000;
+    font-family: inter;
+    }
+
+h1
+    {
+    color: #000000;
+    font-family: inter;
+    }
+
+body
+    {
+    box-sizing: border-box;
+    height: 100vh;
+    width: 100vw;
+    background-color: #ffffff;
+    }
+
+
+
+.button
+    {
+    background-color: var(--primary);
+    color: #ffffff;
+    width: max-content;
+    border: none;
+    border-radius: 100px;
+    font-weight: 600;
+    padding: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
+    cursor: pointer;
+    outline: 2px solid var(--primary);
+    text-align: center;
+    }
+
+    .button:hover
+    {
+    filter: brightness(1.2);
+}
+
+.button2
+    {
+    background-color: #fff;
+    color: var(--primary);
+    border: none;
+    border-radius: 2px;
+    font-weight: 600;
+    padding: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
+    cursor: pointer;
+    text-align: center;
+    outline: 2px solid #ffffff;
+    }
+
+.button2:hover
+{
+    filter: brightness(0.8);
+}
+
+.button3
+    {
+    display: flex;
+    justify-content: space-between;
+    background-color: #ffffff;
+    outline: 2px solid var(--primary);
+    color: var(--primary);
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 15px 5px 15px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.button4
+{
+    background-color: #ffffff00;
+    text-align: center;
+    outline: 2px solid #ffffff;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    padding: 2px;
+    padding-left: 15px;
+    padding-right: 15px;
+    cursor: pointer;
+    }
+
+
+
+
+
+
+
+.logo
+    {
+    font-family: Croc, "Coming Soon";
+    font-weight: 500;
+    color: #ffffff;
+    opacity: 0;
+    }
+
+.Cnavbar
+{
+    width: 100vw;
+    height: 70px;
+}
+
+.navbar
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    background-color: #f1f1f1;
+    box-shadow: 0 0 5px 1px #00000027;
+    box-sizing: border-box;
+    width: 100vw;
+    position: fixed;
+}
+
+.navbar input
+{
+    display: none;
+}
+.navbar .profile
+{
+    position: relative;
+    width: 50px;
+    height: 50px;
+}
+.navbar .profile img
+{
+    width: 100%;
+    position: absolute;
+}
+.navbar .profile span
+{
+    background-color: #008f21;
+    width: 30%;
+    height: 30%;
+    position: absolute;
+    border-radius: 100px;
+    bottom: 5px;
+    right: 5px;
+}
+.navbar .profile:hover ~ .floating
+{
+    display: flex;
+}
+
+.navbar .floating:hover
+{
+    display: flex;
+}
+.navbar .floating
+{
+    transition: .1s ease-in-out;
+    z-index: 2;
+    position: fixed;
+    width: 250px;
+    height: 250px;
+    background-color: #fff;
+    box-shadow: 0 0 5px 1px #00000038;
+    border-radius: 10px;
+    display: none;
+    flex-direction: column;
+    right: 10px;
+    top: 10px;
+}
+.navbar .floating a
+{
+    border-radius: 10px;
+    display: flex;
+    height: 25%;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    align-items: center;
+    gap: 20px;
+}
+.navbar .floating a:hover
+{
+    background-color: #f1f1f1;
+}
+.navbar .floating a img
+{
+    background-color: #f1f1f1;
+    position: relative;
+    border-radius: 10px;
+    width: 20%;
+    padding: 5px;
+    box-sizing: border-box;
+}
+.navbar .floating a p:hover ~ img
+{
+    background-color: #fff;
+}
+.navbar .floating a p
+{
+    width: calc(80% - 20px);
+    font-weight: 400;
+    color: #000;
+}
+
+.navbar .left,
+.navbar .right 
+{
+    display: flex;
+    align-content: center;
+}
+.navbar .left
+{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.navbar .left p:hover
+{
+    border-bottom: 5px solid var(--primary);
+}
+.navbar .left a p
+{
+    font-weight: 500;
+    color: var(--primary);
+}
+.navbar .right
+{
+    align-items: center;
+    gap: 20px;
+}
+
+.below
+{
+    height: 100%;
+    width: 100vw;
+    display: flex;
+}
+.below .Csidebar
+{
+    width: 20%;
+    min-width: 260px;
+    height: 100%;
+}
+.below .Csidebar .sidebar
+{
+    top: 0;
+    left: 0;
+    z-index: 2;
+    padding: 15px;
+    width: 260px;
+    height: 100vh;
+    position: fixed;
+    box-sizing: border-box;
+}
+.below .Csidebar .sidebar .container
+{
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    box-sizing: border-box;
+    box-shadow: 0 0 3px 1px #00000028;
+    background-color: #fff;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.below .Csidebar .sidebar .container input
+{
+    display: none;
+    align-self: flex-end;
+    width: 25px;
+    height: 25px;
+}
+.below .Csidebar .sidebar .container .options
+{
+    display: flex;
+    padding: 10px;
+    box-sizing: border-box;
+    background-color:var(--primary);
+    align-items: center;
+    gap: 20px;
+    border-radius: 8px;
+}
+.below .Csidebar .sidebar .container .options label
+{
+    color: #fff;
+    font-weight: 300;
+    cursor: pointer;
+}
+.below .Csidebar .sidebar .container .options img
+{
+    width: 25px;
+    cursor: pointer;
+    aspect-ratio: 1/1;
+    
+}
+.below .Csidebar .sidebar .container .options-s
+{
+    display: flex;
+    padding: 10px;
+    box-sizing: border-box;
+    cursor: pointer;
+    background-color: #f1f1f1;
+    align-items: center;
+    gap: 20px;
+    border-radius: 8px;
+}
+.below .Csidebar .sidebar .container .options-s label
+{
+    color: var(--primary);
+    cursor: pointer;
+    font-weight: 300;
+}
+.below .Csidebar .sidebar .container .options-s img
+{
+    width: 25px;
+    cursor: pointer;
+    aspect-ratio: 1/1;
+    
+}
+
+.below .content
+{
+    width: 80%;
+    height: max-content;
+    padding: 20px 0 0 0;
+    box-sizing: border-box;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.below .content .widgets
+{
+    box-sizing: border-box;
+    background-color: #f1f1f1;
+    width: calc(100% - 5px);
+    height: 100%;
+    padding: 10px;
+    display: flex;
+    gap: 1vw;
+    border-radius: 10px;
+}
+.below .content .widgets div
+{
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+    justify-content: center;
+    text-align: center;
+}
+.below .content .widgets div img
+{
+    width: 10vw;
+}
+.below .content .widgets div h3
+{
+    font-weight: 400;
+    font-size: 1vw;
+}
+.below .content .widgets div h2
+{
+    font-weight: 500;
+    font-size: 1.1vw;
+}
+.below .content .widgets div h1
+{
+    font-size: 2vw;
+    
+}
+.below .content .calendar
+{
+    background-color: #fff;
+    margin-bottom: 15px;
+    border-radius: 15px;
+    box-sizing: border-box;
+    box-shadow: 0 0 5px 1px #d4d4d4;
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    height: 400px;
+}
+.below .content .calendar p
+{
+    padding: 15px;
+    
+}
+.below .content .calendar h3
+{
+    padding: 15px;
+    align-self: center;
+}
+.below .content .something
+{
+    background-color: #fff;
+    margin-bottom: 15px;
+    border-radius: 15px;
+    box-sizing: border-box;
+    box-shadow: 0 0 5px 1px #d4d4d4;
+    width: calc(40% - 20px);
+    display: flex;
+    flex-direction: column;
+    height: 400px;
+}
+
+#loginphp .blue
+{
+    clip-path: polygon(100% 0, 0 0, 100% 100%);
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    background-color:#fff;
+}
+#loginphp body
+{
+    background-color:#003F8F;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+#loginphp form
+{
+    box-shadow: 0 0 10px 1px #003e8f6b;
+    background-color: #fff;
+    box-sizing: border-box;
+    flex-direction: column;
+    border-radius: 30px;
+    text-align: left;
+    min-width: 400px;
+    padding: 10px;
+    display: flex;
+    padding: 30px;
+    border: none;
+    width: 30vw;
+    gap: 30px;
+}
+#loginphp form .imagegroup
+{
+    width: 100%;
+    height: 10%;
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+    overflow: hidden;
+}
+#loginphp form .imagegroup img
+{
+    width: 50%;
+}
+#loginphp form .inputgroup
+{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+#loginphp form .inputgroup label
+{
+    font-weight: 300;
+}
+#loginphp form .inputgroup input
+{
+    height: 40px;
+    outline: none;
+    border: 1px solid #000;
+    border-radius: 10px;
+    background-color: #f0f0f0;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+}
+#loginphp form input[type="submit"]
+{
+    align-self: center;
+    padding: 10px 80px;
+}
+
+#calonphp .content
+{
+    width: 100%;
+    height: max-content;
+    padding: 10px;
+    box-sizing: border-box;
+}
+#calonphp .content .counter
+{
+    background-color: #fff;
+    box-shadow: 0 0 5px 1px #0000002c;
+    display: flex;
+    border-radius: 10px;
+    justify-content: center;
+    box-sizing: border-box;
+}
+#calonphp .content .counter div
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 0 10px 0 0;
+}
+#calonphp .content .counter div img
+{
+    width: 70px;
+}
+#calonphp .content .counter div h3
+{
+    font-weight: 300;
+    padding: 5px;
+}
+#calonphp .content .counter div p
+{
+    padding: 5px;
+    text-align: end;
+}
+#calonphp .content .table
+{
+    width: 100%;
+    box-shadow: 0 0 5px 1px #00000027;
+    border-radius: 10px;
+}
+#calonphp .content .table .tableopening
+{
+    width: 100%;
+    justify-content: space-between;
+    padding: 15px;
+    box-sizing: border-box;
+    height: 60px;
+    display: flex;
+    align-items: center;
+}
+#calonphp .content .table .tableopening .search
+{
+    width: 300px;
+    height: 100%;
+    gap: 10px;
+    display: flex;
+    outline: 2px solid var(--primary);
+    border-radius: 100px;
+    padding: 2px;
+    box-sizing: border-box;
+}
+#calonphp .content .table .tableopening .search button
+{
+    width: 10%;
+    height: 100%;
+    outline: none;
+    cursor: pointer;
+    padding: 5px;
+    box-sizing: border-box;
+    border: none;
+    border-radius: 100px;
+    background-color: var(--primary);
+}
+#calonphp .content .table .tableopening .search button img
+{
+    width: 100%;
+}
+#calonphp .content .table .tableopening .search input
+{
+    outline: none;
+    border: none;
+    width: 80%;
+    color: #000;
+    background-color: #fff;
+}
+#calonphp .content .table .tablecontent
+{
+    height: max-content;
+    background-color: #fff;
+}
+#calonphp .content .table .tablecontent .top
+{
+    display: flex;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+#calonphp .content .table .tablecontent .top p
+{
+    width: 12.5%;
+    padding: 10px;
+    box-sizing: border-box;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+#calonphp .content .table .tablecontent .bottom
+{
+    height: 400px;
+    overflow: scroll;
+}
+#calonphp .content .table .tablecontent .bottom .row
+{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    box-sizing: border-box;
+    padding: 0 10px;
+    outline: .1px solid #a6a6a6;
+}
+#calonphp .content .table .tablecontent .bottom .row p
+{
+    box-sizing: border-box;
+    padding: 10px;
+    width: 12.5%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+
+}
+#calonphp .content .table .tableclosing
+{
+    width: 100%;
+    height: 10px;
+
+}
+
+
+@media only screen and (max-width: 768px) 
+{
+    .navbar .profile
+    {
+        display: none;
+    }
+    .navbar input
+    {
+        display: block;
+        width: 50px;
+        height: 50px;
+    }
+    .below .Csidebar
+    {
+        width: 0;
+        min-width: 0;
+        height: 100%;
+    }
+    .below .Csidebar .sidebar
+    {
+        display: none;
+        top: 70px;
+        left: 0;
+        padding: 0;
+        width: 100vw;
+        height: 100vh;
+        position: fixed;
+        box-sizing: border-box;
+    }
+    .below .Csidebar .sidebar .container
+    {
+        border-radius: 0;
+    }
+    .below .Csidebar .sidebar img
+    {
+        width: 100px;
+    }
+    .below .content
+    {
+        justify-content: center;
+        width: 100%;
+        padding: 10px;
+        box-sizing: border-box;
+        flex-direction: column;
+        
+    }
+    .below .content .widgets
+    {
+        flex-wrap: wrap;
+        justify-items: center;
+        align-items: center;
+        width: 100%;
+        height: 100vw;
+    }
+    .below .content .widgets div
+    {
+        width: calc(50% - .5vw);
+        height: calc(50% - .5vw);
+        
+    }
+    .below .content .widgets div img
+    {
+        width: 25vw;
+    }
+    .below .content .widgets div h3
+    {
+        font-size: 3vw;
+    }
+    .below .content .widgets div h2
+    {
+        font-size: 3vw;
+        
+    }
+    .below .content .widgets div h1
+    {
+        font-size: 5vw;
+        
+    }
+    .below .content .calendar
+    {
+        width: 100%;
+    }
+    .below .content .something
+    {
+        width: 100%;
+    }
+    .navbar .floating
+{
+    left: 10px;
+    top: 10px;
+}
+    
+    
+    
+    
+
+
+
+#loginphp form
+{
+    width: 60vw;
+        min-width: 300px;
+    }
+    
+}
