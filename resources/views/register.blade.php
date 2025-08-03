@@ -1,27 +1,5 @@
-<!DOCTYPE html>
-<html lang="en" id="formphp">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form Pendaftaran | TIN</title>
-
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Coming+Soon&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
-    <link href="https://fonts.cdnfonts.com/css/croc" rel="stylesheet">
-    @vite(["resources/css/style.css"])
-
-</head>
-<div class="navbar">
-    <a href="index.php">
-        <h1 class="logo">TIN</h1>
-    </a>
-</div>
-
-<body>
-    <form class="content" method="post" action="#">
+@include('components._header')   
+   <form class="content" method="post" action="#">
         @csrf
         <div class="sections">
             <div class="sect">
@@ -29,7 +7,7 @@
                     <label for="nik">NIK <span>(Nomor Induk Kependudukan)</span></label>
                     <input class="input" type="text" inputmode="numeric" name="nik" id="nik"
                         placeholder="Masukkan NIK berupa 16 angka" minlength="16" maxlength="16" value="{{ old("nik") }}" required>
-                        <input type="hidden" name="nik_validate" id="nik_validate" value="false" readonly required>
+                        <input type="hidden" name="nik_validate" id="nik_validate" value="{{ old("nik_validate") ?? false }}" readonly required>
                     <p style="color: red; font-size: 12px;" id="nikError"></p>
                 </div>
                 <div class="div">
@@ -200,8 +178,4 @@
 
         setupRadioButtons('genderRadioGroup', 'genderInput');
     </script>
-
-    @vite(['resources/js/app.js'])
-</body>
-
-</html>
+@include('components._footer')

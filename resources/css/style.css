@@ -167,6 +167,14 @@ body
     gap: 20px;
 }
 
+.navbar > a{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    font-size: 21px;
+}
+
 .section
 {
     width: 100vw;

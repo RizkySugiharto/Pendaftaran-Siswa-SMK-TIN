@@ -1,11 +1,11 @@
 @php
     $random_id_number_script = "script" . rand();
 @endphp
-@if(session()->has("message"))
+@if(session()->has("message") || $message)
     <div class="floating-area">
         <div class="section-error">
             <div class="wrapper-success">
-                <p>{{ Session::get("message") }}</p>
+                <p>{{ Session::get("message") ?? $message}}</p>
                 <span id="close">X</span>
             </div>
         </div>

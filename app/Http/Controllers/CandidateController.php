@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Candidate;
 use App\Http\Requests\StoreCandidateRequest;
 use App\Http\Requests\UpdateCandidateRequest;
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\Console\Input\Input;
 
@@ -28,7 +29,7 @@ class CandidateController extends Controller
      */
     public function create()
     {
-        return view("register");
+        return view("register", ["title" => "Formulir Pendaftaran | TIN"]);
     }
 
     /**
@@ -36,7 +37,11 @@ class CandidateController extends Controller
      */
     public function store(StoreCandidateRequest $request)
     {
-
+        $error_terdaftar_message = [
+            ["name" => "nik", "message" => "Nik calon peserta didik sudah terdaftar"], 
+            ["name" => "no_telp", "message" => "Nomor Telepon calon peserta didik sudah terdaftar"], 
+            ["name" => "email", "message" => "Email calon peserta didik sudah terdaftar"] 
+        ];
         if ($request->input("nik_validate") == "true") {
             $candidate = Candidate::where(
                 column: ["nik" => $request->nik, "email" => $request->email, "no_telp" => $request->no_telp],
@@ -44,7 +49,11 @@ class CandidateController extends Controller
             )->first();
 
             if ($candidate) {
-                return redirect()->back()->withErrors(["Anda sudah terdaftar!"]);
+                for($i =0; $i < count($error_terdaftar_message); $i++){
+                    if($candidate[$error_terdaftar_message[$i]["name"]] == $request->input($error_terdaftar_message[$i]["name"])){
+                        return redirect()->back()->withErrors([$error_terdaftar_message[$i]["message"]])->withInput($request->all());       
+                    }
+                }
             }
 
             $candidate = new Candidate([
@@ -56,7 +65,7 @@ class CandidateController extends Controller
             $is_success = $candidate->save();
 
             if ($is_success) {
-                return redirect()->back()->with(["message" => "Pendaftaran Berhasil!"]);
+                return view('registered')->with(["title" => "Pendaftaran Berhasil | TIN","terdaftar" => true, "fullname" => $candidate["fullname"], "email" => $candidate["email"]]);
             } else {
                 return redirect()->back()->withInput($request->all())->withErrors(["Pendaftaran gagal disimpan!"]);
             }

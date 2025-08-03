@@ -15,8 +15,9 @@ Route::name('candidates.')->controller(CandidateController::class)->group(functi
     Route::put('/admin/candidates/{candidate}', 'update')->name('update');
     Route::delete('/admin/candidates/{candidate}', 'destroy')->name('destroy');
 
-    Route::post('/register', 'store')->name('store');
     Route::get('/register', 'create')->name('create');
+    Route::post('/register', 'store')->name('store');
+    Route::get('/registered', function(){ return view('registered'); } )->name("registered");
 });
 
 Route::name('users.')->controller(UserController::class)->group(function () {
