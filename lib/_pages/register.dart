@@ -1,8 +1,9 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
-import 'package:ppdb_smk_tin/_components/_header.dart';
+import 'package:ppdb_smk_tin/_components/header_content.dart';
 import 'package:ppdb_smk_tin/_components/button.dart';
+import 'package:ppdb_smk_tin/_pages/registered.dart';
 
 class FormPendaftaran extends StatefulWidget {
   const FormPendaftaran({super.key});
@@ -12,7 +13,8 @@ class FormPendaftaran extends StatefulWidget {
 }
 
 class _FormPendaftaranState extends State<FormPendaftaran> {
-  HashMap<String, String> dataSiswa = HashMap();
+  bool isChanged = false;
+  HashMap<String, dynamic> dataSiswa = HashMap();
   HashMap<String, String> erorrMessage = HashMap.from({
     "message": "data NIK tidak valid",
     "name": "nik",
@@ -41,10 +43,48 @@ class _FormPendaftaranState extends State<FormPendaftaran> {
     selectedMajor.remove(major);
   }
 
+  String convertMajorToString() {
+    if (selectedMajor.isEmpty) return "";
+    String stringSelectedMajor = "";
+    for (var major in selectedMajor) {
+      if (selectedMajor.indexOf(major) == selectedMajor.length) {
+        stringSelectedMajor += major;
+      } else {
+        stringSelectedMajor += "$major,";
+      }
+    }
+    return stringSelectedMajor;
+  }
+
+  bool isAllFieldIsFilled() {
+    var fieldNames = [
+      "nik",
+      "fullname",
+      "gender",
+      "date_birth",
+      "email",
+      "no_telp",
+      "address",
+      "prev_school",
+      "major",
+      "parent_name",
+      "parent_telp",
+    ];
+
+    for (int i = 0; i < fieldNames.length; i++) {
+      if (dataSiswa[fieldNames[i]] == null ||
+          dataSiswa[fieldNames[i]] != null &&
+              dataSiswa[fieldNames[i]].toString().isEmpty) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: HeaderContent(height: 100.0),
+      appBar: HeaderContent(backAction: true, alertBeforeBack: isChanged),
       body: Container(
         padding: EdgeInsets.all(5.0),
         width: MediaQuery.of(context).size.width,
@@ -119,7 +159,7 @@ class _FormPendaftaranState extends State<FormPendaftaran> {
                 context,
                 "Nomor Telepon",
                 "Masukkan nomor telepon yang dapat dihubungi",
-                "parent_no_telp",
+                "parent_telp",
               ),
               SizedBox(
                 width: MediaQuery.of(context).size.width - 40.0,
@@ -129,7 +169,39 @@ class _FormPendaftaranState extends State<FormPendaftaran> {
                   textAlign: TextAlign.center,
                 ),
               ),
-              Button(text: "Daftar Sekarang", fungsi: () => print(dataSiswa)),
+              CustomButton(
+                text: "Daftar Sekaransg",
+                fungsi: () {
+                  if (isAllFieldIsFilled()) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder:
+                            (context) =>
+                                Registered(fullname: dataSiswa["fullname"]),
+                      ),
+                    );
+                  } else {
+                    showDialog(
+                      context: context,
+                      builder:
+                          (context) => AlertDialog(
+                            title: Text("Mohon Semua Mengisi Data!"),
+                            content: Text(
+                              "Mohon isi semua data yang dibutuhkan untuk melengkapi pengisian calon peserta didik!",
+                            ),
+                            actions: [
+                              TextButton(
+                                onPressed: () => Navigator.of(context).pop(),
+                                child: Text("Oke"),
+                              ),
+                            ],
+                          ),
+                    );
+                  }
+                  print(dataSiswa);
+                },
+              ),
             ],
           ),
         ),
@@ -279,7 +351,9 @@ class _FormPendaftaranState extends State<FormPendaftaran> {
         } else {
           setSelectedMajors(major);
         }
-        setState(() {});
+        setState(() {
+          dataSiswa["major"] = convertMajorToString();
+        });
       },
     );
   }
@@ -331,7 +405,7 @@ class _FormPendaftaranState extends State<FormPendaftaran> {
         SizedBox(
           width: MediaQuery.of(context).size.width - 40.0,
           child: TextField(
-            controller: TextEditingController(text: dataSiswa[keyName]),
+            // controller: TextEditingController(text: dataSiswa[keyName]),
             decoration: InputDecoration(
               hintText: hintText,
               hintStyle: TextStyle(fontSize: 16.0),
@@ -342,7 +416,13 @@ class _FormPendaftaranState extends State<FormPendaftaran> {
                 borderSide: BorderSide(color: Color(0xFF003F8F)),
               ),
             ),
-            onChanged: (String value) => dataSiswa[keyName] = value,
+            onChanged: (String value) {
+              if (!isChanged) {
+                isChanged = true;
+                setState(() {});
+              }
+              dataSiswa[keyName] = value;
+            },
           ),
         ),
         erorrMessage["name"] == keyName

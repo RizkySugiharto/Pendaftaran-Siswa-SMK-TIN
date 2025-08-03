@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:ppdb_smk_tin/_components/_header.dart';
+import 'package:ppdb_smk_tin/_components/header_content.dart';
 import 'package:ppdb_smk_tin/_components/button.dart';
-import 'package:ppdb_smk_tin/_pages/form.dart';
+import 'package:ppdb_smk_tin/_pages/history_register.dart';
+import 'package:ppdb_smk_tin/_pages/register.dart';
 
 class HomeDart extends StatefulWidget {
   const HomeDart({super.key});
@@ -14,7 +15,7 @@ class _HomeDartState extends State<HomeDart> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: HeaderContent(height: 100.0),
+      appBar: HeaderContent(),
       body: SizedBox(
         height: MediaQuery.of(context).size.height,
         child: Column(
@@ -59,19 +60,19 @@ class _HomeDartState extends State<HomeDart> {
               ),
             ),
             SizedBox(height: 25.0),
-            Button(
+            CustomButton(
               text: "Daftar Sebagai Peserta Didik",
               fungsi:
-                  () => Navigator.of(context).pushReplacement(
+                  () => Navigator.of(context).push(
                     MaterialPageRoute(builder: (context) => FormPendaftaran()),
                   ),
             ),
             SizedBox(height: 15.0),
-            Button(
+            CustomButton(
               text: "Riwayat Pendaftaran",
               fungsi:
-                  () => Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => FormPendaftaran()),
+                  () => Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => HistoryRegister()),
                   ),
             ),
           ],
