@@ -3,6 +3,7 @@
 @endphp
 
 @if ($errors->any())
+    @vite(["resources/css/alert.css"])
     <div class="floating-area">
         <div class="section-error">
             @foreach ($errors->all() as $error)

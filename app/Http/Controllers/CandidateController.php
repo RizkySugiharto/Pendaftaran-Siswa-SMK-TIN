@@ -21,7 +21,7 @@ class CandidateController extends Controller
         }
 
         $candidates = Candidate::all();
-        return view("admin/candidates", ["candidates" => $candidates]);
+        return view("admin/candidates", ["title" => "Daftar Calon Peserta Didik | TIN","id_css" => "calonphp","candidates" => $candidates]);
     }
 
     /**

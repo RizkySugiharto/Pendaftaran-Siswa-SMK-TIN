@@ -1,30 +1,30 @@
-@include("components._header-admin")
-@include("components._menu-profile-admin")
+@include()
 <div class="below">
-    @include("components._side-bar-admin")
+    @include("")
     <div class="content">
         <div class="counter">
             <div>
-                <img src="{{ asset("icons/personbox.svg") }}" alt="icon person">
+                <img src="img/icons/personbox.svg" alt="">
             </div>
             <div>
-                <h3> Calon Peserta Didik <br> Terdaftar</h3>
-                <p>{{ count($candidates)  }}</p>
+                <h3>Peserta Didik <br> Terdaftar</h3>
+                <p>109</p>
             </div>
         </div>
 
         <div class="table">
             <div class="tableopening">
-                <p>Data calon peserta didik <br>2026</p>
+                <p>Data peserta didik <br>2026</p>
                 <div class="search">
-                    <button><img src="{{ asset("icons/filter.svg")  }}" alt=""></button>
+                    <button><img src="img/icons/filter.svg" alt=""></button>
                     <input type="text">
-                    <button> <img src="{{ asset("icons/search.svg")  }}" alt=""></button>
+                    <button> <img src="img/icons/search.svg" alt=""></button>
                 </div>
             </div>
             <div class="tablecontent">
                 <div class="tablewrapper">
                     <div class="top">
+                        <p>ID</p>
                         <p>NIK</p>
                         <p>Nama Lengkap</p>
                         <p>Tanggal Lahir</p>
@@ -34,7 +34,7 @@
                         <p>Minat Jurusan</p>
                     </div>
                     <div class="bottom">
-                        <!-- <div class="row">
+                        <div class="row">
                             <p>001</p>
                             <p>917498172984</p>
                             <p>Wildan Izhar Al Haqq</p>
@@ -43,18 +43,7 @@
                             <p>wildan@gmail.com</p>
                             <p>08123456789</p>
                             <p>RPL, DKV, TKJ</p>
-                        </div> -->
-                        @foreach ($candidates as $candidate )
-                             <div class="row">
-                            <p>{{ $candidate->nik }}</p>
-                            <p>{{ $candidate->fullname }}</p>
-                            <p>{{ $candidate->birth_date }}</p>
-                            <p>{{ $candidate->gender }}</p>
-                            <p>{{ $candidate->email }}</p>
-                            <p>{{ $candidate->no_telp }}</p>
-                            <p>{{ $candidate->major }}</p>
                         </div>
-                        @endforeach
                     </div>
                 </div>
             </div>
@@ -63,5 +52,4 @@
         </div>
     </div>
 </div>
-
-@include("components._footer-admin")
+@include('')

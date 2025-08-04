@@ -12,12 +12,12 @@ class AdminController extends Controller
      */
     public function dashboard()
     {
-        return view("admin.dashboard");
+        return view("admin.dashboard", ["title" => "Dashboard Admin | TIN"]);
     }
 
     public function login_page()
     {
-        return view("admin.login");
+        return view("admin.login", ["title" => "Login | SMK TIN"]);
     }
 
     public function login(Request $request)

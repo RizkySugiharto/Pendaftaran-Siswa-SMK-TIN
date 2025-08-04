@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Database\Factories\userFactory;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Http\Requests\StoreUserRequest;
@@ -81,4 +82,5 @@ class UserController extends Controller
             return redirect()->back()->withErrors(["User gagal dihapus!"]);
         }
     }
+
 }

@@ -287,67 +287,12 @@ body
 }
 
 
-
-
 #formphp body .content input[type="submit"]
 {
     position: fixed;
     bottom: 20px;
     right: 20px;
     text-align: end;
-}
-
-.floating-area{
-    width: 100vw;
-    height: 100dvh;
-    position: fixed;
-    top: 0;
-    left: 0;
-}
-
-.section-error{
-    width: 100vw;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.wrapper-error, .wrapper-success{
-    min-width: 240px;
-    width: max-content;
-    min-height: 35px;
-    border-radius: 3px;
-    display: flex;
-    gap: 15px;
-    align-items: center;
-    padding: 4px 15px 4px 10px;
-    background-color: rgb(226, 123, 123);
-}
-
-.wrapper-success{
-    min-width: max-content;
-    background-color: rgb(176, 222, 132);
-}
-
-.wrapper-success > p{
-    color: rgb(44, 48, 40);
-}
-
-.wrapper-error > p{
-    color: rgb(82, 27, 27);
-}
-
-.wrapper-error > span,
-.wrapper-success > span{
-    border: none;
-    background-color: transparent;
-    color: rgb(102, 62, 62);
-    font-size: 1rem;
-    cursor: pointer;
-}
-.wrapper-success > span{
-    color: rgb(44, 48, 40);
 }
 
 @media only screen and (max-width: 768px) 

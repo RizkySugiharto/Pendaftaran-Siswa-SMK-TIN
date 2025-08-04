@@ -2,6 +2,7 @@
     $random_id_number_script = "script" . rand();
 @endphp
 @if(session()->has("message") || $message)
+    @vite(["resources/css/alert.css"])
     <div class="floating-area">
         <div class="section-error">
             <div class="wrapper-success">
