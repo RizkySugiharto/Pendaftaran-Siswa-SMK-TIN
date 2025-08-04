@@ -6,8 +6,10 @@ use App\Models\Candidate;
 use App\Http\Requests\StoreCandidateRequest;
 use App\Http\Requests\UpdateCandidateRequest;
 use Illuminate\Contracts\Session\Session;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\Console\Input\Input;
+use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
 
 class CandidateController extends Controller
 {
@@ -38,9 +40,9 @@ class CandidateController extends Controller
     public function store(StoreCandidateRequest $request)
     {
         $error_terdaftar_message = [
-            ["name" => "nik", "message" => "Nik calon peserta didik sudah terdaftar"], 
-            ["name" => "no_telp", "message" => "Nomor Telepon calon peserta didik sudah terdaftar"], 
-            ["name" => "email", "message" => "Email calon peserta didik sudah terdaftar"] 
+            ["name" => "nik", "message" => "Nik calon peserta didik sudah terdaftar"],
+            ["name" => "no_telp", "message" => "Nomor Telepon calon peserta didik sudah terdaftar"],
+            ["name" => "email", "message" => "Email calon peserta didik sudah terdaftar"]
         ];
         if ($request->input("nik_validate") == "true") {
             $candidate = Candidate::where(
@@ -51,7 +53,7 @@ class CandidateController extends Controller
             if ($candidate) {
                 for($i =0; $i < count($error_terdaftar_message); $i++){
                     if($candidate[$error_terdaftar_message[$i]["name"]] == $request->input($error_terdaftar_message[$i]["name"])){
-                        return redirect()->back()->withErrors([$error_terdaftar_message[$i]["message"]])->withInput($request->all());       
+                        return redirect()->back()->withErrors([$error_terdaftar_message[$i]["message"]])->withInput($request->all());
                     }
                 }
             }
@@ -101,6 +103,46 @@ class CandidateController extends Controller
             return redirect()->back()->withInput(["message" => "Data calon siswa berhasil dihapus!"]);
         } else {
             return redirect()->back()->withErrors(["Data gagal dihapus!"]);
+        }
+    }
+
+    /**
+     * Store a candidate data in version of API
+     */
+    public function registerJSON(StoreCandidateRequest $request)
+    {
+        $error_terdaftar_message = [
+            ["name" => "nik", "message" => "Nik calon peserta didik sudah terdaftar"],
+            ["name" => "no_telp", "message" => "Nomor Telepon calon peserta didik sudah terdaftar"],
+            ["name" => "email", "message" => "Email calon peserta didik sudah terdaftar"]
+        ];
+        $candidate = Candidate::where(
+            column: ["nik" => $request->nik, "email" => $request->email, "no_telp" => $request->no_telp],
+            boolean: 'or'
+        )->first();
+
+        if ($candidate) {
+            for($i =0; $i < count($error_terdaftar_message); $i++){
+                if($candidate[$error_terdaftar_message[$i]["name"]] == $request->input($error_terdaftar_message[$i]["name"])){
+                    throw new ConflictHttpException($error_terdaftar_message[$i]["message"]);
+                }
+            }
+        }
+
+        $candidate = new Candidate([
+            ...$request->validated(),
+            'status' => "unverified",
+            'submit_date' => now(),
+            'phase' => 1,
+        ]);
+        $is_success = $candidate->save();
+
+        if ($is_success) {
+            return response()->json([
+                "success" => "Pendaftaran berhasil disimpan!"
+            ]);
+        } else {
+            throw new ConflictHttpException($error_terdaftar_message[$i]["Pendaftaran gagal disimpan!"]);
         }
     }
 }

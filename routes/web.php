@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
+// Web
 Route::get('/', function () {
     return view('index');
 })->name('index');
@@ -17,7 +18,6 @@ Route::name('candidates.')->controller(CandidateController::class)->group(functi
 
     Route::get('/register', 'create')->name('create');
     Route::post('/register', 'store')->name('store');
-    Route::get('/registered', function(){ return view('registered'); } )->name("registered");
 });
 
 Route::name('users.')->controller(UserController::class)->group(function () {
@@ -34,3 +34,7 @@ Route::name('admin.')->prefix('admin')->controller(AdminController::class)->grou
     Route::post('/login', 'login')->name('login');
 });
 
+// API
+Route::prefix('api')->group(function () {
+    Route::post('/register', [CandidateController::class, 'registerJSON']);
+});
