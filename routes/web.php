@@ -32,6 +32,7 @@ Route::name('admin.')->prefix('admin')->controller(AdminController::class)->grou
     Route::get('/dashboard', 'dashboard')->name('dashboard')->middleware('auth');
     Route::get('/login', 'login_page')->name('login-page');
     Route::post('/login', 'login')->name('login');
+    Route::get('/logout', 'logout')->name('logout');
 });
 
 // API

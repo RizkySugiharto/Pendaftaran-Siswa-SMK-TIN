@@ -57,7 +57,7 @@
             <h2>Selamat!!, Kamu telah terdaftar sebagai Calon Peserta Didik Kami</h2>
             <p>Setelah ini, kamu akan mendapatkan informasi terkait sekolah dan tahapan selanjutnya melalui email / no telepon yang sudah didaftarkan ya</p>
             <p>"Tetap Semangat, Jangan Menyerah"</p>
-            <button class="btn_back" onclick="location.href = location.origin">Kembali Ke Halaman Utama</button>
+            <button class="btn_back" onclick='location.href = `{{ route("index") }}` '>Kembali Ke Halaman Utama</button>
         </div>
     </div>
 </main>
@@ -74,7 +74,7 @@
 </script>
 @else
 <script>
-    location.href = location.origin;
+    location.href = "{{ route("index") }}";
 </script>
 @endif
 @include('components._footer')

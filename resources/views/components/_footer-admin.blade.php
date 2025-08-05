@@ -32,7 +32,7 @@
 
     let btn_nav = document.querySelector('.options-s').parentElement.parentElement.children;
     btn_nav = Array.from(btn_nav).filter((element) => element.tagName === "A" )
-    const prefixPage = "/admin"
+    const prefixPage = "/smk_tin/admin"
     const currentPath = location.pathname; 
     btn_nav.forEach(element => {
         const optionbtn = element.children[0];

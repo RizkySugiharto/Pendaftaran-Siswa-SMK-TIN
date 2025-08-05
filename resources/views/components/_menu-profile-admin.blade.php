@@ -18,7 +18,7 @@
             <a href=""><img src="{{ asset("icons/help.svg") }}" alt="help support admin">
                 <p>Help & Support</p>
             </a>
-            <a href=""><img src="{{ asset("icons/logout.svg") }}" alt="sign out admin">
+            <a href="{{ route('admin.logout') }}"><img src="{{ asset("icons/logout.svg") }}" alt="sign out admin">
                 <p>Sign Out</p>
             </a>
         </div>
