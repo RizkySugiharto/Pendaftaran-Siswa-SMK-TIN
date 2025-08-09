@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:ppdb_smk_tin/_pages/home.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await dotenv.load(fileName: ".env");
+
   runApp(const MyApp());
 }
 
@@ -11,8 +17,17 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    Permission.manageExternalStorage.request().then((status) {
+      if (status.isDenied || status.isPermanentlyDenied) {
+        if (!context.mounted) {
+          return;
+        }
+      }
+    });
+
     return MaterialApp(
       title: 'Pendaftaran SMK Techno Informatika Nusantara',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         // This is the theme of your application.
         //

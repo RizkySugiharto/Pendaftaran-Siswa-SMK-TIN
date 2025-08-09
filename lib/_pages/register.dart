@@ -3,6 +3,8 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:ppdb_smk_tin/_components/header_content.dart';
 import 'package:ppdb_smk_tin/_components/button.dart';
+import 'package:ppdb_smk_tin/_data/providers/candidates_api.dart';
+import 'package:ppdb_smk_tin/_data/providers/history_manager.dart';
 import 'package:ppdb_smk_tin/_pages/registered.dart';
 
 class FormPendaftaran extends StatefulWidget {
@@ -13,402 +15,306 @@ class FormPendaftaran extends StatefulWidget {
 }
 
 class _FormPendaftaranState extends State<FormPendaftaran> {
-  bool isChanged = false;
-  HashMap<String, dynamic> dataSiswa = HashMap();
-  HashMap<String, String> erorrMessage = HashMap.from({
-    "message": "data NIK tidak valid",
-    "name": "nik",
+  final HashMap<String, TextEditingController> _textControllers = HashMap.from({
+    "nik": TextEditingController(),
+    "fullname": TextEditingController(),
+    "birth_date": TextEditingController(),
+    "email": TextEditingController(),
+    "no_telp": TextEditingController(),
+    "address": TextEditingController(),
+    "prev_school": TextEditingController(),
+    "parent_name": TextEditingController(),
+    "parent_telp": TextEditingController(),
+    "parent_email": TextEditingController(),
+    "gender": TextEditingController(),
+    "major": TextEditingController(),
   });
-  String gender = "L";
-  String guard = "A";
-  var selectedMajor = [];
-  int interestMajorIndex = 0;
-  void setSelectedMajors(String major) {
-    if (selectedMajor.length == 3) {
-      interestMajorIndex = interestMajorIndex >= 2 ? 0 : interestMajorIndex + 1;
-      selectedMajor[interestMajorIndex] = major;
-      return;
+  bool _isLoading = false;
+
+  @override
+  void dispose() {
+    for (var key in _textControllers.keys) {
+      _textControllers[key]!.dispose();
     }
-    selectedMajor.add(major);
-    interestMajorIndex++;
+
+    super.dispose();
   }
 
-  bool isSelectedMajor(String major) {
-    if (selectedMajor.isEmpty) return false;
-    return selectedMajor.contains(major);
-  }
-
-  void unSelectedMajor(String major) {
-    if (selectedMajor.isEmpty) return;
-    selectedMajor.remove(major);
-  }
-
-  String convertMajorToString() {
-    if (selectedMajor.isEmpty) return "";
-    String stringSelectedMajor = "";
-    for (var major in selectedMajor) {
-      if (selectedMajor.indexOf(major) == selectedMajor.length) {
-        stringSelectedMajor += major;
-      } else {
-        stringSelectedMajor += "$major,";
-      }
-    }
-    return stringSelectedMajor;
-  }
-
-  bool isAllFieldIsFilled() {
-    var fieldNames = [
-      "nik",
-      "fullname",
-      "gender",
-      "date_birth",
-      "email",
-      "no_telp",
-      "address",
-      "prev_school",
-      "major",
-      "parent_name",
-      "parent_telp",
-    ];
-
-    for (int i = 0; i < fieldNames.length; i++) {
-      if (dataSiswa[fieldNames[i]] == null ||
-          dataSiswa[fieldNames[i]] != null &&
-              dataSiswa[fieldNames[i]].toString().isEmpty) {
+  bool _isAllFieldIsEmpty() {
+    for (var key in _textControllers.keys) {
+      if (key != "gender" && _textControllers[key]!.text.isNotEmpty) {
         return false;
       }
     }
     return true;
   }
 
+  bool _isAllFieldIsFilled() {
+    for (var key in _textControllers.keys) {
+      if (_textControllers[key]!.text.isEmpty) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  Future<void> _onRegisterTap() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    if (_isAllFieldIsFilled()) {
+      final responseData = await CandidatesApi.register(
+        fields: _textControllers.map((key, value) => MapEntry(key, value.text)),
+      );
+
+      if (!mounted) return;
+
+      if (responseData['error']?.isNotEmpty ?? false) {
+        final errorMessageText = responseData['error'] ?? "";
+        final errorFieldsText = (responseData['fields'] as Map<String, dynamic>)
+            .map(
+              (fieldName, fieldErrors) =>
+                  MapEntry(fieldName, "• ${fieldErrors[0]}"),
+            )
+            .values
+            .join("\n");
+
+        showDialog(
+          context: context,
+          builder:
+              (context) => AlertDialog(
+                title: Text("Error"),
+                content: Text("$errorMessageText\n\n$errorFieldsText"),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    child: Text("Oke"),
+                  ),
+                ],
+              ),
+        );
+        setState(() {
+          _isLoading = false;
+        });
+        return;
+      }
+
+      HistoryManager.addHistory(name: _textControllers["fullname"]!.text);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder:
+              (context) => Registered(
+                fullname: _textControllers["fullname"]?.text ?? "",
+              ),
+        ),
+      );
+    } else {
+      showDialog(
+        context: context,
+        builder:
+            (context) => AlertDialog(
+              title: Text("Mohon isi semua data!"),
+              content: Text(
+                "Mohon isi semua data yang dibutuhkan untuk melengkapi pengisian calon peserta didik!",
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: Text("Oke"),
+                ),
+              ],
+            ),
+      );
+    }
+
+    setState(() {
+      _isLoading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: HeaderContent(backAction: true, alertBeforeBack: isChanged),
+      appBar: HeaderContent(
+        backAction: true,
+        checkEnableAlert: () => !_isAllFieldIsEmpty(),
+      ),
       body: Container(
         padding: EdgeInsets.all(5.0),
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
         child: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             spacing: 5.0,
             children: [
-              SizedBox(height: 5.0),
-              SizedBox(
-                width: MediaQuery.of(context).size.width - 40.0,
-                child: Text(
-                  "Data Calon Peserta Didik",
-                  style: TextStyle(
-                    fontFamily: "Poppins",
-                    fontSize: 24.0,
-                    fontWeight: FontWeight.bold,
+              SizedBox(height: 8.0),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                child: Center(
+                  child: Text(
+                    "Data Calon Peserta Didik",
+                    style: TextStyle(
+                      fontFamily: "Poppins",
+                      fontSize: 24.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
                 ),
               ),
-              _textField(
-                context,
-                "NIK (Nomor Induk Kependudukan)",
-                "Masukkan 16 angka",
-                "nik",
-              ),
-              _textField(
-                context,
-                "Nama Lengkap",
-                "Masukkan Nama Lengkap Anda",
-                "fullname",
-              ),
-              _textField(
-                context,
-                "Tanggal Lahir (tahun/bulan/tanggal)",
-                "2008/07/31",
-                "date_birth",
-              ),
-              _textField(context, "Email", "johndoe@gmail.com", "email"),
-              _textField(context, "Nomor Telepon", "081212120123", "no_telp"),
-              _textField(
-                context,
-                "Alamat",
-                "Jl. Boulevard Bintaro A92 B1/23, 07/92",
-                "address",
-              ),
-              _textField(
-                context,
-                "Asal Sekolah",
-                "Masukkan asal sekolah anda",
-                "prev_school",
-              ),
-              _genderGroup(context),
-              _majorGroupButton(context),
               SizedBox(height: 10.0),
-              _dataWaliMurid(context, false),
-              _textField(
-                context,
-                "Nama",
-                "Masukkan Nama Wali Murid",
-                "parent_name",
+              _TextFieldWidget(
+                labelText: "NIK (Nomor Induk Kependudukan)",
+                hintText: "Masukkan 16 angka",
+                controller: _textControllers["nik"],
+                isRequired: true,
               ),
-              _textField(
-                context,
-                "Email",
-                "Masukkan alamat email",
-                "parent_email",
-                false,
+              _TextFieldWidget(
+                labelText: "Nama Lengkap",
+                hintText: "Masukkan nama lengkap Anda",
+                controller: _textControllers["fullname"],
+                isRequired: true,
               ),
-              _textField(
-                context,
-                "Nomor Telepon",
-                "Masukkan nomor telepon yang dapat dihubungi",
-                "parent_telp",
+              _TextFieldWidget(
+                labelText: "Tanggal Lahir",
+                hintText: "2008/07/31",
+                controller: _textControllers["birth_date"],
+                isRequired: true,
               ),
-              SizedBox(
-                width: MediaQuery.of(context).size.width - 40.0,
-                child: Text(
-                  "Setiap NIK hanya bisa mengirim satu data, pastikan data yang diberikan sudah benar!",
-                  style: TextStyle(fontFamily: "Poppins", fontSize: 14.0),
-                  textAlign: TextAlign.center,
+              _TextFieldWidget(
+                labelText: "Email",
+                hintText: "johndoe@gmail.com",
+                controller: _textControllers["email"],
+                isRequired: true,
+              ),
+              _TextFieldWidget(
+                labelText: "Nomor Telepon",
+                hintText: "081212120123",
+                controller: _textControllers["no_telp"],
+                isRequired: true,
+              ),
+              _TextFieldWidget(
+                labelText: "Alamat",
+                hintText: "Jl. Boulevard Bintaro A92 B1/23, 07/92",
+                controller: _textControllers["address"],
+                isRequired: true,
+              ),
+              _TextFieldWidget(
+                labelText: "Asal Sekolah",
+                hintText: "Masukkan asal sekolah anda",
+                controller: _textControllers["prev_school"],
+                isRequired: true,
+              ),
+              _GenderGroupWidget(controller: _textControllers["gender"]),
+              _MajorGroupWidget(controller: _textControllers["major"]),
+              SizedBox(height: 10.0),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                child: Center(
+                  child: Text(
+                    "Data Wali Siswa",
+                    style: TextStyle(
+                      fontFamily: "Poppins",
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
               ),
-              CustomButton(
-                text: "Daftar Sekaransg",
-                fungsi: () {
-                  if (isAllFieldIsFilled()) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder:
-                            (context) =>
-                                Registered(fullname: dataSiswa["fullname"]),
-                      ),
-                    );
-                  } else {
-                    showDialog(
-                      context: context,
-                      builder:
-                          (context) => AlertDialog(
-                            title: Text("Mohon Semua Mengisi Data!"),
-                            content: Text(
-                              "Mohon isi semua data yang dibutuhkan untuk melengkapi pengisian calon peserta didik!",
-                            ),
-                            actions: [
-                              TextButton(
-                                onPressed: () => Navigator.of(context).pop(),
-                                child: Text("Oke"),
-                              ),
-                            ],
-                          ),
-                    );
-                  }
-                  print(dataSiswa);
-                },
+              SizedBox(height: 2.0),
+              _TextFieldWidget(
+                labelText: "Nama",
+                hintText: "Masukkan nama wali murid Anda",
+                controller: _textControllers["parent_name"],
+                isRequired: true,
               ),
+              _TextFieldWidget(
+                labelText: "Email",
+                hintText: "Masukkan alamat email wali murid Anda",
+                controller: _textControllers["parent_email"],
+              ),
+              _TextFieldWidget(
+                labelText: "Nomor Telepon",
+                hintText: "Masukkan nomor telepon yang dapat dihubungi",
+                controller: _textControllers["parent_telp"],
+                isRequired: true,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                child: Center(
+                  child: Text(
+                    "Setiap NIK hanya bisa mengirim satu data, pastikan data yang diberikan sudah benar!",
+                    style: TextStyle(fontFamily: "Poppins", fontSize: 14.0),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+              _isLoading
+                  ? Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: LinearProgressIndicator(),
+                  )
+                  : CustomButton(
+                    text: "Daftar Sekarang",
+                    onTap: _onRegisterTap,
+                  ),
             ],
           ),
         ),
       ),
     );
   }
+}
 
-  SizedBox _dataWaliMurid(BuildContext context, bool load) {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width - 40.0,
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Text(
-                "Data Wali Siswa",
-                style: TextStyle(
-                  fontFamily: "Poppins",
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ],
-          ),
-          load
-              ? SizedBox(
-                width: MediaQuery.of(context).size.width - 40,
-                child: Row(
-                  children: [
-                    _guardButton("A"), // A = ayah
-                    _guardButton("B"), // B = Ibu,
-                    _guardButton("C"), // C = Other
-                  ],
-                ),
-              )
-              : SizedBox(),
-          guard == "C"
-              ? _textField(
-                context,
-                "Siapa Yang Akan Menjadi Walimu?",
-                "Paman/Bibi/Kakek/Nenek/Kakak",
-                "parent_type",
-              )
-              : SizedBox(),
-        ],
-      ),
-    );
-  }
+class _TextFieldWidget extends StatelessWidget {
+  final TextEditingController? controller;
+  final String labelText;
+  final bool isRequired;
+  final String hintText;
 
-  SizedBox _majorGroupButton(BuildContext context) {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width - 40.0,
-      child: Column(
-        children: [
-          _labelText("Minat Jurusan (maximal 3)"),
-          Wrap(
-            runSpacing: 10.0,
-            children: [
-              _majorButton("DKV"),
-              _majorButton("RPL"),
-              _majorButton("TKJ"),
-              _majorButton("BC"),
-              _majorButton("ANM"),
-              _majorButton("GAMEDEV"),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
+  const _TextFieldWidget({
+    required this.labelText,
+    required this.hintText,
+    this.controller,
+    this.isRequired = false,
+  });
 
-  SizedBox _genderGroup(BuildContext context) {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width - 40.0,
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 4),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _labelText("Jenis Kelamin"),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [_genderButton("L", gender), _genderButton("P", gender)],
-          ),
-        ],
-      ),
-    );
-  }
-
-  GestureDetector _guardButton(String guard) {
-    return GestureDetector(
-      child: SizedBox(
-        width: 110.0,
-        height: 50.0,
-        child: Card(
-          color: guard == this.guard ? Color(0XFF003F8F) : Colors.white,
-          child: Center(
-            child: Text(
-              guard == "A" || guard == "B"
-                  ? guard == "A"
-                      ? "Ayah"
-                      : "Ibu"
-                  : "Other",
+          Text.rich(
+            TextSpan(
+              text: labelText,
               style: TextStyle(
-                color: guard == this.guard ? Colors.white : Color(0XFF003F8F),
                 fontFamily: "Poppins",
-                fontWeight: FontWeight.w600,
                 fontSize: 16.0,
+                color: Colors.black,
               ),
+              children: [
+                if (isRequired)
+                  WidgetSpan(
+                    child: Text(
+                      "*",
+                      style: TextStyle(
+                        fontFamily: "Poppins",
+                        fontSize: 18,
+                        color: Color(0xFF003F8F),
+                      ),
+                    ),
+                  ),
+              ],
             ),
           ),
-        ),
-      ),
-      onTap: () {
-        if (guard != "C") {
-          dataSiswa["guard_type"] = guard == "A" ? "Ayah" : "Ibu";
-        }
-        this.guard = guard;
-        setState(() {});
-      },
-    );
-  }
-
-  GestureDetector _majorButton(String major) {
-    return GestureDetector(
-      child: SizedBox(
-        width: 110.0,
-        height: 50.0,
-        child: Card(
-          color: isSelectedMajor(major) ? Color(0XFF003F8F) : Colors.white,
-          child: Center(
-            child: Text(
-              major,
-              style: TextStyle(
-                color:
-                    isSelectedMajor(major) ? Colors.white : Color(0XFF003F8F),
-                fontFamily: "Poppins",
-                fontWeight: FontWeight.w600,
-                fontSize: 16.0,
-              ),
-            ),
-          ),
-        ),
-      ),
-      onTap: () {
-        if (isSelectedMajor(major)) {
-          unSelectedMajor(major);
-        } else {
-          setSelectedMajors(major);
-        }
-        setState(() {
-          dataSiswa["major"] = convertMajorToString();
-        });
-      },
-    );
-  }
-
-  GestureDetector _genderButton(String gender, String selectedGender) {
-    return GestureDetector(
-      child: SizedBox(
-        width: 135.0,
-        height: 50.0,
-        child: Card(
-          color: gender == selectedGender ? Color(0XFF003F8F) : Colors.white,
-          child: Center(
-            child: Text(
-              gender == "L" ? "Laki - Laki" : "Perempuan",
-              style: TextStyle(
-                color:
-                    gender == selectedGender ? Colors.white : Color(0XFF003F8F),
-                fontFamily: "Poppins",
-                fontWeight: FontWeight.w600,
-                fontSize: 16.0,
-              ),
-            ),
-          ),
-        ),
-      ),
-      onTap: () {
-        this.gender = gender;
-        dataSiswa["gender"] = gender == "L" ? "Laki - Laki" : "Perempuan";
-        setState(() {});
-      },
-    );
-  }
-
-  Column _textField(
-    BuildContext context,
-    String labelText,
-    String hintText,
-    String keyName, [
-    bool? isMustFill = true,
-  ]) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        SizedBox(
-          width: MediaQuery.of(context).size.width - 40.0,
-          child: _labelText(labelText, isMustFill),
-        ),
-        SizedBox(height: 2.5),
-        SizedBox(
-          width: MediaQuery.of(context).size.width - 40.0,
-          child: TextField(
-            // controller: TextEditingController(text: dataSiswa[keyName]),
+          const SizedBox(height: 4),
+          TextField(
             decoration: InputDecoration(
               hintText: hintText,
-              hintStyle: TextStyle(fontSize: 16.0),
+              hintStyle: TextStyle(fontSize: 16.0, color: Colors.grey),
               border: OutlineInputBorder(
                 borderSide: BorderSide(color: Color(0xFF003F8F)),
               ),
@@ -416,57 +322,210 @@ class _FormPendaftaranState extends State<FormPendaftaran> {
                 borderSide: BorderSide(color: Color(0xFF003F8F)),
               ),
             ),
-            onChanged: (String value) {
-              if (!isChanged) {
-                isChanged = true;
-                setState(() {});
-              }
-              dataSiswa[keyName] = value;
-            },
+            controller: controller,
           ),
-        ),
-        erorrMessage["name"] == keyName
-            ? SizedBox(
-              width: MediaQuery.of(context).size.width - 40.0,
-              child: _labelText(
-                erorrMessage["message"]!,
-                false,
-                16.0,
-                Colors.red,
+        ],
+      ),
+    );
+  }
+}
+
+class _GenderGroupWidget extends StatefulWidget {
+  final TextEditingController? controller;
+  const _GenderGroupWidget({this.controller});
+
+  @override
+  State<_GenderGroupWidget> createState() => __GenderGroupWidgetState();
+}
+
+class __GenderGroupWidgetState extends State<_GenderGroupWidget> {
+  final List<String> genders = ["male", "female"];
+  final List<String> gendersTitle = ["Laki-Laki", "Perempuan"];
+  late final TextEditingController controller =
+      widget.controller ?? TextEditingController();
+  late String selectedGender = genders[0];
+
+  @override
+  void initState() {
+    super.initState();
+    controller.text = selectedGender;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 4),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text.rich(
+            TextSpan(
+              text: "Jenis Kelamin",
+              style: TextStyle(
+                fontFamily: "Poppins",
+                fontSize: 16.0,
+                color: Colors.black,
               ),
-            )
-            : SizedBox(),
-      ],
+              children: [
+                TextSpan(
+                  text: "*",
+                  style: TextStyle(
+                    fontFamily: "Poppins",
+                    fontSize: 18,
+                    color: Color(0xFF003F8F),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 4),
+          Row(
+            spacing: 10.0,
+            children:
+                genders.map((gender) {
+                  int index = genders.indexOf(gender);
+                  return _buildButton(
+                    name: gendersTitle[index],
+                    value: gender,
+                    index: index,
+                  );
+                }).toList(),
+          ),
+        ],
+      ),
     );
   }
 
-  Row _labelText(
-    String labelText, [
-    bool? isMustFill = true,
-    double? fontSize = 18.0,
-    Color? textColor,
-  ]) {
-    return Row(
-      children: [
-        Text(
-          labelText,
-          style: TextStyle(
-            fontFamily: "Poppins",
-            fontSize: 16.0,
-            color: textColor ?? Colors.black,
+  Widget _buildButton({
+    required String name,
+    required String value,
+    required int index,
+  }) {
+    bool isSelected = value == selectedGender;
+
+    return InkWell(
+      onTap: () {
+        setState(() {
+          selectedGender = value;
+          controller.text = value;
+        });
+      },
+      borderRadius: BorderRadius.circular(8.0),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 8.0),
+        decoration: BoxDecoration(
+          color: isSelected ? Color(0XFF003F8F) : Colors.white,
+          borderRadius: BorderRadius.circular(8.0),
+          border: Border.all(
+            color: isSelected ? Colors.white : Color(0XFF003F8F),
           ),
         ),
-        isMustFill != null && isMustFill
-            ? Text(
-              "*",
+        child: Text(
+          name,
+          style: TextStyle(
+            color: isSelected ? Colors.white : Color(0XFF003F8F),
+            fontFamily: "Poppins",
+            fontWeight: FontWeight.w600,
+            fontSize: 16.0,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _MajorGroupWidget extends StatefulWidget {
+  final TextEditingController? controller;
+  const _MajorGroupWidget({this.controller});
+
+  @override
+  State<_MajorGroupWidget> createState() => __MajorGroupWidgetState();
+}
+
+class __MajorGroupWidgetState extends State<_MajorGroupWidget> {
+  final List<String> majors = ["DKV", "RPL", "TKJ", "BC", "ANM", "GAMEDEV"];
+  late final TextEditingController controller =
+      widget.controller ?? TextEditingController();
+  late ListQueue<String> selectedMajors = ListQueue<String>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 4),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text.rich(
+            TextSpan(
+              text: "Minat Jurusan (maksimal 3)",
               style: TextStyle(
                 fontFamily: "Poppins",
-                fontSize: fontSize,
-                color: textColor ?? Color(0xFF003F8F),
+                fontSize: 16.0,
+                color: Colors.black,
               ),
-            )
-            : Text(''),
-      ],
+              children: [
+                TextSpan(
+                  text: "*",
+                  style: TextStyle(
+                    fontFamily: "Poppins",
+                    fontSize: 18,
+                    color: Color(0xFF003F8F),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 4),
+          Wrap(
+            spacing: 12.0,
+            runSpacing: 10.0,
+            children:
+                majors.map((major) {
+                  return _buildButton(value: major);
+                }).toList(),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildButton({required String value}) {
+    bool isSelected = selectedMajors.contains(value);
+
+    return InkWell(
+      onTap: () {
+        setState(() {
+          if (isSelected) {
+            selectedMajors.remove(value);
+          } else if (selectedMajors.length >= 3) {
+            selectedMajors.removeFirst();
+            selectedMajors.addLast(value);
+          } else {
+            selectedMajors.addLast(value);
+          }
+          controller.text = selectedMajors.join(',');
+        });
+      },
+      borderRadius: BorderRadius.circular(8.0),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 8.0),
+        decoration: BoxDecoration(
+          color: isSelected ? Color(0XFF003F8F) : Colors.white,
+          borderRadius: BorderRadius.circular(8.0),
+          border: Border.all(
+            color: isSelected ? Colors.white : Color(0XFF003F8F),
+          ),
+        ),
+        child: Text(
+          value,
+          style: TextStyle(
+            color: isSelected ? Colors.white : Color(0XFF003F8F),
+            fontFamily: "Poppins",
+            fontWeight: FontWeight.w600,
+            fontSize: 16.0,
+          ),
+        ),
+      ),
     );
   }
 }

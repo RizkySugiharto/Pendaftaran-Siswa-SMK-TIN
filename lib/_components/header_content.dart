@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 
 class HeaderContent extends StatelessWidget implements PreferredSizeWidget {
   final bool backAction;
-  final bool alertBeforeBack;
+  final bool Function()? checkEnableAlert;
+
   const HeaderContent({
     super.key,
     this.backAction = false,
-    this.alertBeforeBack = false,
+    this.checkEnableAlert,
   });
 
   @override
@@ -56,7 +57,7 @@ class HeaderContent extends StatelessWidget implements PreferredSizeWidget {
               ? GestureDetector(
                 onTap:
                     () =>
-                        alertBeforeBack
+                        (checkEnableAlert ?? () => false)()
                             ? showDialog(
                               context: context,
                               builder:

@@ -26,8 +26,8 @@ class _RegisteredState extends State<Registered> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Icon(Icons.check, color: Colors.green, size: 120.0),
-            Text(
+            const Icon(Icons.check, color: Colors.green, size: 120.0),
+            const Text(
               "Pendafataran Berhasil!",
               style: TextStyle(fontFamily: "Poppins", fontSize: 18.0),
             ),
@@ -41,7 +41,7 @@ class _RegisteredState extends State<Registered> {
                     style: TextStyle(fontFamily: "Poppins", fontSize: 14.0),
                     textAlign: TextAlign.center,
                   ),
-                  Text(
+                  const Text(
                     "Informasi terkait calon peserta didik dan lainnya, akan kami kirimkan melalui email / no telepon yang didaftarkan",
                     style: TextStyle(fontFamily: "Poppins", fontSize: 14.0),
                     textAlign: TextAlign.center,
@@ -49,61 +49,65 @@ class _RegisteredState extends State<Registered> {
                 ],
               ),
             ),
-            SizedBox(height: 12.0),
+            const SizedBox(height: 12.0),
             Text(
               "Sukses selalu ya nak $fullname!",
               style: TextStyle(fontFamily: "Poppins", fontSize: 18.0),
             ),
-            SizedBox(height: 15.0),
-            GestureDetector(
-              onTap:
-                  () => Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => HistoryRegister()),
-                  ),
-              child: SizedBox(
-                width: MediaQuery.of(context).size.width - 60.0,
-                height: 60.0,
-                child: Card(
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(3.0)),
-                    side: BorderSide(color: Color(0XFF003F8F)),
-                  ),
-                  color: Color(0XFF003F8F),
-                  child: Center(
-                    child: Text(
-                      "Lihat Riwayat Pendaftaran",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18.0,
-                        fontFamily: "Poppins",
+            const SizedBox(height: 15.0),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30.0),
+              child: GestureDetector(
+                onTap:
+                    () => Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(builder: (context) => HistoryRegister()),
+                    ),
+                child: const SizedBox(
+                  height: 60.0,
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(3.0)),
+                      side: BorderSide(color: Color(0XFF003F8F)),
+                    ),
+                    color: Color(0XFF003F8F),
+                    child: Center(
+                      child: Text(
+                        "Lihat Riwayat Pendaftaran",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18.0,
+                          fontFamily: "Poppins",
+                        ),
                       ),
                     ),
                   ),
                 ),
               ),
             ),
-            SizedBox(height: 10.0),
-            GestureDetector(
-              onTap:
-                  () => Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => HomeDart()),
-                  ),
-              child: SizedBox(
-                width: MediaQuery.of(context).size.width - 60.0,
-                height: 60.0,
-                child: Card(
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(3.0)),
-                    side: BorderSide(color: Color(0XFF003F8F)),
-                  ),
-                  color: Colors.white,
-                  child: Center(
-                    child: Text(
-                      "Kembali ke halaman utama",
-                      style: TextStyle(
-                        color: Color(0XFF003F8F),
-                        fontSize: 18.0,
-                        fontFamily: "Poppins",
+            const SizedBox(height: 10.0),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30.0),
+              child: GestureDetector(
+                onTap:
+                    () => Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(builder: (context) => HomeDart()),
+                    ),
+                child: const SizedBox(
+                  height: 60.0,
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(3.0)),
+                      side: BorderSide(color: Color(0XFF003F8F)),
+                    ),
+                    color: Colors.white,
+                    child: Center(
+                      child: Text(
+                        "Kembali ke halaman utama",
+                        style: TextStyle(
+                          color: Color(0XFF003F8F),
+                          fontSize: 18.0,
+                          fontFamily: "Poppins",
+                        ),
                       ),
                     ),
                   ),
