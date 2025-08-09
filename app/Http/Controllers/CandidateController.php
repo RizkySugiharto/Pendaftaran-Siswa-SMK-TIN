@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreCandidateRequestAPI;
 use App\Models\Candidate;
 use App\Http\Requests\StoreCandidateRequest;
 use App\Http\Requests\UpdateCandidateRequest;
@@ -109,7 +110,7 @@ class CandidateController extends Controller
     /**
      * Store a candidate data in version of API
      */
-    public function registerJSON(StoreCandidateRequest $request)
+    public function registerJSON(StoreCandidateRequestAPI $request)
     {
         $error_terdaftar_message = [
             ["name" => "nik", "message" => "Nik calon peserta didik sudah terdaftar"],
