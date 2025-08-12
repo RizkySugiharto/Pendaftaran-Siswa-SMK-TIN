@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CandidateController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\GradeController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -37,5 +38,13 @@ Route::name('admin.')->prefix('admin')->controller(AdminController::class)->grou
 
 // API
 Route::prefix('api')->group(function () {
-    Route::post('/register', [CandidateController::class, 'registerJSON']);
+    Route::post('/register', [CandidateController::class, 'registerAPI']);
+    Route::get('/candidates/{candidate}', [CandidateController::class, 'showAPI']);
+
+    Route::prefix('grades')->controller(GradeController::class)->group(function () {
+        Route::get('/', 'index');
+        Route::get('/{candidate}', 'show');
+        Route::put('/{candidate}', 'updateOrStore');
+        Route::delete('/{candidate}', 'destroy');
+    });
 });

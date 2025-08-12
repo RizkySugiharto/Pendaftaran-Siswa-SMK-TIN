@@ -40,4 +40,8 @@ class Candidate extends Model
             'gender' => CandidateGender::class,
         ];
     }
+
+    public function grades() {
+        return $this->hasMany(Grade::class, 'nik', 'nik');
+    }
 }

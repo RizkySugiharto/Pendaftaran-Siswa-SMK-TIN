@@ -108,9 +108,33 @@ class CandidateController extends Controller
     }
 
     /**
+     * Display the specified resource in version of API.
+     */
+    public function showAPI(Candidate $candidate)
+    {
+        $filtered = $candidate->only([
+            "nik",
+            "fullname",
+            "email",
+            "no_telp",
+            "address",
+            "prev_school",
+            "parent_name",
+            "parent_email",
+            "parent_telp",
+            "major",
+            "gender",
+            "birth_date",
+        ]);
+        $filtered["birth_date"] = date("d/m/Y", strtotime($filtered["birth_date"]));
+
+        return response()->json($filtered);
+    }
+
+    /**
      * Store a candidate data in version of API
      */
-    public function registerJSON(StoreCandidateRequestAPI $request)
+    public function registerAPI(StoreCandidateRequestAPI $request)
     {
         $error_terdaftar_message = [
             ["name" => "nik", "message" => "Nik calon peserta didik sudah terdaftar"],
