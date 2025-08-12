@@ -82,8 +82,8 @@ class CandidateController extends Controller
      */
     public function update(UpdateCandidateRequest $request, Candidate $candidate)
     {
-        $is_success = $candidate->update($request->validated());
-        if ($is_success) {
+        $isSuccess = $candidate->update($request->validated());
+        if ($isSuccess) {
             return redirect()->back()->withInput(["message" => "Data calon siswa berhasil diperbarui!"]);
         } else {
             return redirect()->back()->withErrors(["Data gagal diperbarui!"]);
@@ -99,8 +99,8 @@ class CandidateController extends Controller
             return redirect()->route("index");
         }
 
-        $is_success = $candidate->delete();
-        if ($is_success) {
+        $isSuccess = $candidate->delete();
+        if ($isSuccess) {
             return redirect()->back()->withInput(["message" => "Data calon siswa berhasil dihapus!"]);
         } else {
             return redirect()->back()->withErrors(["Data gagal dihapus!"]);

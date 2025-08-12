@@ -17,7 +17,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('admin.users');
+        $users = User::all(['id', 'name', 'email']);
+        return view('admin.users', ['users' => $users]);
     }
 
     /**
@@ -25,12 +26,14 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        $user = User::first(["email" => $request->email]);
+        $validated = $request->validated();
+
+        $user = User::firstWhere(['email' => $validated['email']]);
         if ($user) {
             return redirect()->back()->withErrors(["Email sudah terdaftar!"]);
         }
 
-        $user = new User($request->validated());
+        $user = new User($validated);
         $is_success = $user->save();
 
         if ($is_success) {
