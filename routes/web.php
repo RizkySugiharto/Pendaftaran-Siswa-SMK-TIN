@@ -41,10 +41,15 @@ Route::prefix('api')->group(function () {
     Route::post('/register', [CandidateController::class, 'registerAPI']);
     Route::get('/candidates/{candidate}', [CandidateController::class, 'showAPI']);
 
-    Route::prefix('grades')->controller(GradeController::class)->group(function () {
+    Route::prefix('grades')->middleware('auth')->controller(GradeController::class)->group(function () {
         Route::get('/', 'index');
         Route::get('/{candidate}', 'show');
         Route::put('/{candidate}', 'updateOrStore');
         Route::delete('/{candidate}', 'destroy');
+    });
+
+    Route::prefix('admin')->controller(AdminController::class)->group(function () {
+        Route::post('/login', 'loginAPI');
+        Route::post('/logout', 'logoutAPI');
     });
 });

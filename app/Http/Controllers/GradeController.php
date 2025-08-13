@@ -41,14 +41,11 @@ class GradeController extends Controller
                 "name" => $grade['name'],
             ], $grade);
 
-            $isSuccess = true;
-            if (Auth::check()) {
-                $isSuccess = $objGrade->update($objGrade->created_by == null ? [
-                    "created_by" => Auth::user()->id,
-                ] : [
-                    "updated_by" => Auth::user()->id,
-                ]);
-            }
+            $isSuccess = $objGrade->update($objGrade->created_by == null ? [
+                "created_by" => Auth::user()->id,
+            ] : [
+                "updated_by" => Auth::user()->id,
+            ]);
 
             if (!$isSuccess) {
                 $isFailed = true;
@@ -57,9 +54,9 @@ class GradeController extends Controller
         }
 
         if (!$isFailed) {
-            return ["success" => "Seluruh data nilai dari calon peserta berhasil dihapus!"];
+            return ["success" => "Data nilai dari calon peserta berhasil disimpan!"];
         } else {
-            throw new BadRequestHttpException("Seluruh data nilai dari calon peserta gagal dihapus!");
+            throw new BadRequestHttpException("Data nilai dari calon peserta gagal disimpan!");
         }
     }
 

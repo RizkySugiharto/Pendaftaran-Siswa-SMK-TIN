@@ -4,8 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Grade extends Model
 {
@@ -23,13 +21,5 @@ class Grade extends Model
 
     public function candidate(): BelongsTo {
         return $this->belongsTo(Candidate::class, 'nik', 'nik');
-    }
-
-    public function updated_by(): BelongsTo {
-        return $this->belongsTo(User::class, 'updated_by');
-    }
-
-    public function created_by(): BelongsTo {
-        return $this->belongsTo(User::class, 'created_by');
     }
 }
