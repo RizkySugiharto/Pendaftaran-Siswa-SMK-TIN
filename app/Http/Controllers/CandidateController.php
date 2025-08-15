@@ -2,13 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\CandidateGender;
+use App\CandidateStatus;
+use App\Http\Requests\ShowCandidateRequest;
 use App\Http\Requests\StoreCandidateRequestAPI;
 use App\Models\Candidate;
 use App\Http\Requests\StoreCandidateRequest;
 use App\Http\Requests\UpdateCandidateRequest;
+use App\Models\Grade;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
+use Request;
 use Symfony\Component\Console\Input\Input;
 use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
 
@@ -20,16 +25,37 @@ class CandidateController extends Controller
     public function index()
     {
         if (!Auth::check()) {
-            return redirect()->route("index");
+            return redirect()->route("index", ["title" => "Selamat Datang Di SMK TIN"]);
         }
 
         $candidates = Candidate::all();
         return view("admin/candidates", ["title" => "Daftar Calon Peserta Didik | TIN","id_css" => "calonphp","candidates" => $candidates]);
     }
 
+    public function leaderboard(){
+        $data = Grade::selectRaw("candidates.fullname, candidates.prev_school, CAST(AVG(value) AS UNSIGNED) AS avg_value")->join('candidates', 'candidates.nik', '=', 'grades.nik')->groupBy('candidates.nik')->orderBy("avg_value","desc")->limit(200)->get();
+        return view("leaderboard", ["title" => "Leaderboard | Siswa SMK TIN", "data" => $data]);
+    }
+
     /**
      * Show the form for creating a new resource.
      */
+
+    public function show(Candidate $candidate)
+    {
+        if (!Auth::check()) {
+            return redirect()->route("index");
+        }
+        return view("admin.candidate-details", [
+            "title" => "Daftar Calon Peserta Didik | TIN",
+            "candidate" => $candidate,
+            "grades" => $candidate->grades()->get(),
+            "id_css" => "calonphp",
+            "genders" => CandidateGender::cases(),
+            "statuses" => CandidateStatus::cases()
+        ]);
+    }
+
     public function create()
     {
         return view("register", ["title" => "Formulir Pendaftaran | TIN"]);

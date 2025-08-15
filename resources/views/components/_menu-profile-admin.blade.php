@@ -1,7 +1,7 @@
 <div class="Cnavbar">
     <div class="navbar">
-        <a href="index.php">
-            <h1 class="logo">TIN</h1>
+        <a href="{{route('admin.dashboard')}}">
+            <img src="{{ asset("images/logo tin.png") }}" alt="logo tin" height="50">
         </a>
         <input type="checkbox" id="check">
         <div class="profile">

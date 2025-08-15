@@ -1,48 +1,6 @@
-<!DOCTYPE html>
-<html lang="en" id="formphp">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Halaman Utama | TIN</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+@include('components._header');
+ <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    @vite(["resources/css/style.css"])
-    <link rel="shortcut icon" href="{{ asset("images/icon-white.png ") }}" type="image/x-icon">
-
-</head>
-<div class="navbar">
-    <a href="index.php">
-        <h1 class="logo">TIN</h1>
-    </a>
-</div>
-
-<body>
-    {{-- <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
-        <div class="container">
-            <a class="navbar-brand fw-bold" href="index.html">
-                <i class="fas fa-graduation-cap me-2"></i>SMK Teknologi Nusantara
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="index.html">Beranda</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="registration.html">Daftar Siswa Baru</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="admin-login.html">Login Admin</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav> --}}
-
     <!-- Hero Section -->
     <section class="hero-section">
         <div class="container">
@@ -55,12 +13,12 @@
                             <i class="fas fa-user-plus me-2"></i>Daftar Sekarang
                         </a>
                         <a href="#about" class="btn btn-outline-primary btn-lg">
-                            <i class="fas fa-info-circle me-2"></i>Pelajari Lebih Lanjut
+                            <i class="fas fa-info-circle me-2"></i>  
                         </a>
                     </div>
                 </div>
                 <div class="col-lg-6">
-                    <img src="/placeholder.svg?height=400&width=500" alt="SMK Teknologi Nusantara" class="img-fluid rounded shadow">
+                    <img src="{{ asset("images/logo tin.png")  }}" alt="SMK Teknologi Nusantara" class="img-fluid rounded shadow">
                 </div>
             </div>
         </div>
@@ -222,8 +180,6 @@
         </div>
     </footer>
 
-    @includeWhen($errors->any(), 'components._error-message');
-    @includeWhen(Session::has("message"),'components._success-message');
-</body>
-
-</html>
+    @includeWhen($errors->any(), 'components._error-message')
+    @includeWhen(Session::has("message"),'components._success-message')
+@include('components._footer')

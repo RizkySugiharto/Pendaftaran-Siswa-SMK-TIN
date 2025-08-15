@@ -46,9 +46,9 @@
                         </div> -->
                         @foreach ($candidates as $candidate )
                              <div class="row">
-                            <p>{{ $candidate->nik }}</p>
+                            <p><a href="candidates/{{ $candidate->nik }}" style="text-decoration:underline">{{ $candidate->nik }}</a></p>
                             <p>{{ $candidate->fullname }}</p>
-                            <p>{{ $candidate->birth_date }}</p>
+                            <p>{{ explode(" ", $candidate->birth_date)[0] }}</p>
                             <p>{{ $candidate->gender }}</p>
                             <p>{{ $candidate->email }}</p>
                             <p>{{ $candidate->no_telp }}</p>

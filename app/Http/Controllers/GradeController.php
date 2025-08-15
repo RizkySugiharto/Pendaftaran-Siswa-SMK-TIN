@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateOrStoreGradeRequest;
+use App\Http\Requests\UpdateOrStoreGradeRequestWeb;
 use App\Models\Candidate;
 use App\Models\Grade;
 use Illuminate\Support\Facades\Auth;
@@ -57,6 +58,40 @@ class GradeController extends Controller
             return ["success" => "Data nilai dari calon peserta berhasil disimpan!"];
         } else {
             throw new BadRequestHttpException("Data nilai dari calon peserta gagal disimpan!");
+        }
+    }
+    public function updateOrStoreWeb(UpdateOrStoreGradeRequestWeb $request, Candidate $candidate)
+    {
+        if(!Auth::check()) {
+            return redirect()->route("index");
+        }
+
+        $grades = $request->validated();
+        $isFailed = false;
+        foreach ($grades as $gradeName => $gradeValue) {
+            $objGrade = Grade::updateOrCreate([
+                "nik" => $candidate->nik,
+                "name" => $gradeName,
+            ], [
+                "value" => $gradeValue
+            ]);
+
+            $isSuccess = $objGrade->update($objGrade->created_by == null ? [
+                "created_by" => Auth::user()->id,
+            ] : [
+                "updated_by" => Auth::user()->id,
+            ]);
+
+            if (!$isSuccess) {
+                $isFailed = true;
+                break;
+            }
+        }
+
+        if (!$isFailed) {
+            return redirect()->back()->with(["message" => "Data nilai dari calon peserta berhasil disimpan!"]);
+        } else {
+            return redirect()->back()->withErrors(["message" => "Data nilai dari calon peserta gagal disimpan!"]);
         }
     }
 
