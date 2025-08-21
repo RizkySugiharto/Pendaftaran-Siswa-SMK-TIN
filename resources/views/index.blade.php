@@ -18,7 +18,7 @@
                     </div>
                 </div>
                 <div class="col-lg-6">
-                    <img src="{{ asset("images/logo tin.png")  }}" alt="SMK Teknologi Nusantara" class="img-fluid rounded shadow">
+                    <img src="{{ asset("images/logo tin.png")  }}" alt="SMK Teknologi Nusantara" width="100%">
                 </div>
             </div>
         </div>

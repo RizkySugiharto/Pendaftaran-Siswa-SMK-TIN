@@ -16,8 +16,7 @@
 </head>
 <div class="navbar">
     <a href="{{ asset("") }}">
-        <img src="{{ asset("images/icon-white.png") }}" alt="logo-smk-tin">
-        <p class="logo">SMK Techno Informatika Nusantara</p>
+        <img src="{{ asset("images/logo-white.png") }}" alt="logo-smk-tin" height="100">
     </a>
 </div>
 
