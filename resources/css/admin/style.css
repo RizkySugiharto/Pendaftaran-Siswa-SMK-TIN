@@ -525,6 +525,19 @@ body
     padding: 10px;
     box-sizing: border-box;
 }
+#calonphp .content .upper
+{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    align-content: center;
+}
+#calonphp .content .upper a
+{
+    align-content: end;
+
+}
 #calonphp .content .counter
 {
     background-color: #fff;
@@ -533,6 +546,26 @@ body
     border-radius: 10px;
     justify-content: center;
     box-sizing: border-box;
+}
+
+#calonphp .content .counter-button
+{
+    background-color: #003F8F;
+    color: #fff;
+    box-shadow: 0 0 5px 1px #0000002c;
+    display: flex;
+    border-radius: 10px;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: 10px;
+    font-size: 12px;
+    margin-left: 10px;
+    
+}
+#calonphp .content .counter-button h3
+{
+    font-weight: 400 !important;
+
 }
 #calonphp .content .counter div
 {

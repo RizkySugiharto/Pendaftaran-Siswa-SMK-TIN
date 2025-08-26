@@ -122,57 +122,35 @@ body
 
 
 
-.logo
-    {
-    font-family: Croc, "Coming Soon";
-    font-weight: 500;
-    color: #ffffff;
-    }
 
-.navbar
+.navvy
     {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 25px 15px;
+    padding: 10px 15px;
     background-color: var(--primary);
     box-shadow: 0 0 5px 1px #00000027;
     box-sizing: border-box;
     }
 
-.navbar .left,
-.navbar .right 
-{
-    display: flex;
-    align-content: center;
-}
-.navbar .left
-{
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
-.navbar .left p:hover
-{
-    border-bottom: 5px solid var(--primary);
-}
-.navbar .left a p
-{
-    font-weight: 500;
-    color: var(--primary);
-}
-.navbar .right
-{
-    align-items: center;
-    gap: 20px;
-}
 
-.navbar > a{
+.links
+{
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 8px;
-    font-size: 21px;
+    gap: 10px;
+}
+.links a
+{
+    color: #fff !important;
+    text-decoration: none;
+
+}
+.navvy a img
+{
+    height: 70px;
 }
 
 .section
@@ -204,6 +182,86 @@ body
 }
 
 
+.btn
+{
+    display: flex;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+    justify-content: center;
+    color: #fff !important;
+    background-color: #003F8F !important;
+    border-radius: 10px !important;
+}
+.btn i::before
+{
+    display: flex;
+    align-items: center !important;
+    justify-content: center;
+}
+.btn:hover
+{
+    outline: 1px solid #003F8F !important;
+    color: #003F8F !important;
+    background-color: #fff !important;
+
+}
+.major-card
+{
+    border-radius: 20px !important;
+}
+.card-body
+{
+    color: #003f8f !important;
+    border-radius: 10px !important;
+    flex:1 1 auto;
+    padding: 30px;
+}
+
+.card-title
+{
+    font-weight: 700 !important;
+}
+
+.text-primary8
+{
+    font-size: 50px;
+    font-weight: 700;
+    color: #003F8F !important;
+}
+.text-primary9
+{
+    font-size: 30px;
+    font-weight: 700;
+    color: #003F8F !important;
+}
+
+footer
+{
+    width: 100%;
+    height: auto;
+    color: #fff;
+    background: #003F8F;
+    padding: 30px;
+    box-sizing: border-box;
+}
+
+footer .container
+{
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+}
+footer .container p, 
+footer .container h5
+{
+    color: #fff !important;
+}
+footer .container .right
+{
+    display: flex;
+    align-items: end;
+}
 
 #formphp body .content
 {
@@ -297,9 +355,17 @@ body
 
 @media only screen and (max-width: 768px) 
 {
-    .navbar .left
+    .navvy
+    {
+        flex-direction: column;
+    }
+    .navvy .left
     {
         align-items: center;
+    }
+    .navvy .links
+    {
+        margin-top: 20px;
     }
     .logo
     {
@@ -322,15 +388,13 @@ body
         width: 100%;
     }
 
-    .navbar .right form button img
+    footer .container
     {
-        display: none;
+        flex-direction: column;
+        gap: 30px;
     }
 
-    .navbar .left a p
-    {
-        display: none;
-    }
+
     #formphp body .content .sections
     {
         flex-direction: column;

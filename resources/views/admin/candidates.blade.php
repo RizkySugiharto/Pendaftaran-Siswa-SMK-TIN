@@ -3,15 +3,24 @@
 <div class="below">
     @include("components._side-bar-admin")
     <div class="content">
+        <div class="upper">
         <div class="counter">
             <div>
-                <img src="{{ asset("icons/personbox.svg") }}" alt="icon person">
+                <img src="{{ asset('icons/personbox.svg') }}" alt="icon person">
             </div>
             <div>
                 <h3> Calon Peserta Didik <br> Terdaftar</h3>
                 <p>{{ count($candidates)  }}</p>
             </div>
         </div>
+        <a href="{{ route('candidates.create') }}">
+        <div class="counter-button">
+            <div>
+                <h3> Tambah Peserta Didik</h3>
+            </div>
+        </div>
+    </a>
+</div>
 
         <div class="table">
             <div class="tableopening">
