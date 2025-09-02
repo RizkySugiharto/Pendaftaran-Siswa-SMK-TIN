@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ppdb_smk_tin/_components/header_content.dart';
 import 'package:ppdb_smk_tin/_components/button.dart';
 import 'package:ppdb_smk_tin/_pages/history_register.dart';
+import 'package:ppdb_smk_tin/_pages/leaderboard.dart';
 import 'package:ppdb_smk_tin/_pages/register.dart';
 
 class HomeDart extends StatefulWidget {
@@ -31,15 +32,15 @@ class _HomeDartState extends State<HomeDart> {
                   width: 120.0,
                   height: 120.0,
                 ),
-                    Text(
-                      "TEKNO INFORMATIKA\nNUSANTARA",
-                      style: TextStyle(
-                        color: Color(0XFF003F8F),
-                        fontSize: 22.0,
-                        fontFamily: "Poppins",
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                Text(
+                  "TEKNO INFORMATIKA\nNUSANTARA",
+                  style: TextStyle(
+                    color: Color(0XFF003F8F),
+                    fontSize: 22.0,
+                    fontFamily: "Poppins",
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ],
             ),
           ),
@@ -58,6 +59,15 @@ class _HomeDartState extends State<HomeDart> {
                   MaterialPageRoute(builder: (context) => HistoryRegister()),
                 ),
           ),
+          CustomButton(
+            text: "Lihat Leaderboard",
+            onTap:
+                () => Navigator.of(
+                  context,
+                ).push(MaterialPageRoute(builder: (context) => Leaderboard())),
+          ),
+          const SizedBox(height: 35.0),
+          const Text("© 2025 Copyright by Rizky Sugiharto XII RPL"),
         ],
       ),
     );

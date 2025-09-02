@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ppdb_smk_tin/_components/header_content.dart';
-import 'package:ppdb_smk_tin/_pages/history_register.dart';
 import 'package:ppdb_smk_tin/_pages/home.dart';
+import 'package:ppdb_smk_tin/_pages/leaderboard.dart';
 
 class Registered extends StatefulWidget {
   const Registered({super.key, required this.fullname});
@@ -60,7 +60,7 @@ class _RegisteredState extends State<Registered> {
               child: GestureDetector(
                 onTap:
                     () => Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (context) => HistoryRegister()),
+                      MaterialPageRoute(builder: (context) => Leaderboard()),
                     ),
                 child: const SizedBox(
                   height: 60.0,
@@ -72,7 +72,7 @@ class _RegisteredState extends State<Registered> {
                     color: Color(0XFF003F8F),
                     child: Center(
                       child: Text(
-                        "Lihat Riwayat Pendaftaran",
+                        "Lihat Leaderboard",
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 18.0,
