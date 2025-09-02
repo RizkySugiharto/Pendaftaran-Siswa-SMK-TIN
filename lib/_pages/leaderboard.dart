@@ -58,15 +58,16 @@ class _LeaderboardState extends State<Leaderboard> {
               children: [
                 const SizedBox(height: 35),
                 const Padding(
-                  padding: EdgeInsets.all(8.0),
+                  padding: EdgeInsets.symmetric(horizontal: 18.0),
                   child: Text(
-                    "Leaderboard Nilai",
+                    "Peringkat Calon Peserta Didik SMK Techno Informatika 2026",
                     style: TextStyle(
                       color: Color(0XFF003F8F),
                       fontSize: 26.0,
                       fontFamily: "Poppins",
                       fontWeight: FontWeight.bold,
                     ),
+                    textAlign: TextAlign.center,
                   ),
                 ),
                 const SizedBox(height: 35),
