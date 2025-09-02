@@ -1,6 +1,7 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
+import 'package:nik_validator/nik_validator.dart';
 import 'package:ppdb_smk_tin/_components/header_content.dart';
 import 'package:ppdb_smk_tin/_components/button.dart';
 import 'package:ppdb_smk_tin/_data/providers/candidates_api.dart';
@@ -51,6 +52,9 @@ class _FormPendaftaranState extends State<FormPendaftaran> {
 
   bool _isAllFieldIsFilled() {
     for (var key in _textControllers.keys) {
+      if (key == 'parent_email') {
+        continue;
+      }
       if (_textControllers[key]!.text.isEmpty) {
         return false;
       }
@@ -59,11 +63,59 @@ class _FormPendaftaranState extends State<FormPendaftaran> {
   }
 
   Future<void> _onRegisterTap() async {
-    setState(() {
-      _isLoading = true;
-    });
+    try {
+      setState(() {
+        _isLoading = true;
+      });
 
-    if (_isAllFieldIsFilled()) {
+      if (!_isAllFieldIsFilled()) {
+        showDialog(
+          context: context,
+          builder:
+              (context) => AlertDialog(
+                title: Text("Mohon isi semua data!"),
+                content: Text(
+                  "Mohon isi semua data yang dibutuhkan untuk melengkapi pengisian calon peserta didik!",
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    child: Text("Oke"),
+                  ),
+                ],
+              ),
+        );
+        setState(() {
+          _isLoading = false;
+        });
+        return;
+      }
+
+      NIKModel nikResult = await NIKValidator.instance.parse(
+        nik: _textControllers['nik']?.text ?? '',
+      );
+      if (!(nikResult.valid ?? false)) {
+        if (!mounted) return;
+        showDialog(
+          context: context,
+          builder:
+              (context) => AlertDialog(
+                title: Text("NIK tidak valid"),
+                content: Text("NIK tidak valid"),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    child: Text("Oke"),
+                  ),
+                ],
+              ),
+        );
+        setState(() {
+          _isLoading = false;
+        });
+        return;
+      }
+
       final responseData = await CandidatesApi.register(
         fields: _textControllers.map((key, value) => MapEntry(key, value.text)),
       );
@@ -110,15 +162,17 @@ class _FormPendaftaranState extends State<FormPendaftaran> {
               ),
         ),
       );
-    } else {
+
+      setState(() {
+        _isLoading = false;
+      });
+    } catch (e) {
       showDialog(
         context: context,
         builder:
             (context) => AlertDialog(
-              title: Text("Mohon isi semua data!"),
-              content: Text(
-                "Mohon isi semua data yang dibutuhkan untuk melengkapi pengisian calon peserta didik!",
-              ),
+              title: Text("Error"),
+              content: Text(e.toString()),
               actions: [
                 TextButton(
                   onPressed: () => Navigator.of(context).pop(),
@@ -127,11 +181,10 @@ class _FormPendaftaranState extends State<FormPendaftaran> {
               ],
             ),
       );
+      setState(() {
+        _isLoading = false;
+      });
     }
-
-    setState(() {
-      _isLoading = false;
-    });
   }
 
   @override

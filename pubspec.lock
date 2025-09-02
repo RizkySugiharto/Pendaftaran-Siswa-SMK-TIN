@@ -248,6 +248,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.0"
+  nik_validator:
+    dependency: "direct main"
+    description:
+      name: nik_validator
+      sha256: "7c24d2a396468177a689561fafd8bb59d3366e6795514a6db124441c0ad68107"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.2"
   path:
     dependency: transitive
     description:
