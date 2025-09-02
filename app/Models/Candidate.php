@@ -5,9 +5,14 @@ namespace App\Models;
 use App\CandidateGender;
 use App\CandidateStatus;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Notifications\Notifiable;
 class Candidate extends Model
 {
+
+    /** @use HasFactory<\Database\Factories\CandidateFactory> */
+    use HasFactory, Notifiable;
+
     protected $table = 'candidates';
     protected $primaryKey = 'nik';
     public $incrementing = false;

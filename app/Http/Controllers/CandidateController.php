@@ -136,6 +136,7 @@ class CandidateController extends Controller
     /**
      * Display the specified resource in version of API.
      */
+    
     public function showAPI(Candidate $candidate)
     {
         $filtered = $candidate->only([
@@ -195,5 +196,13 @@ class CandidateController extends Controller
         } else {
             throw new ConflictHttpException($error_terdaftar_message[$i]["Pendaftaran gagal disimpan!"]);
         }
+    }
+
+   /**
+    * Show 100 Candidates From The Top Score
+    */
+    public function leaderboardAPI(){
+        $data = Grade::selectRaw("candidates.fullname, candidates.prev_school, CAST(AVG(value) AS UNSIGNED) AS avg_value")->join('candidates', 'candidates.nik', '=', 'grades.nik')->groupBy('candidates.nik')->orderBy("avg_value","desc")->limit(100)->get();
+        return response()->json($data);
     }
 }

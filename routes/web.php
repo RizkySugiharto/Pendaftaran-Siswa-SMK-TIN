@@ -42,6 +42,7 @@ Route::name('admin.')->prefix('admin')->controller(AdminController::class)->grou
 Route::prefix('api')->group(function () {
     Route::post('/register', [CandidateController::class, 'registerAPI']);
     Route::get('/candidates/{candidate}', [CandidateController::class, 'showAPI']);
+    Route::get('/scores', [CandidateController::class, 'leaderboardAPI']);
 
     Route::prefix('grades')->middleware('auth')->controller(GradeController::class)->group(function () {
         Route::get('/', 'index');
