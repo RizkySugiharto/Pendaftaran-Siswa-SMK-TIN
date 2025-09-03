@@ -14,7 +14,13 @@ class CandidatesApi {
         data: formData,
       );
 
-      return HashMap.from(response.data as Map<String, dynamic>);
+      if (response.statusCode == 200) {
+        return HashMap.from(response.data as Map<String, dynamic>);
+      } else {
+        return HashMap.from({
+          'error': response.data?['error'] ?? 'Something went wrong !',
+        });
+      }
     } catch (e) {
       return HashMap.from({'error': e.toString()});
     }

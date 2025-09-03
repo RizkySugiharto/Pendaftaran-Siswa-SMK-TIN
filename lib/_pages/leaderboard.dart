@@ -92,6 +92,7 @@ class _LeaderboardState extends State<Leaderboard> {
                               borderRadius: BorderRadius.circular(8.0),
                             ),
                             child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
                                   "${index + 1}.",
@@ -103,36 +104,35 @@ class _LeaderboardState extends State<Leaderboard> {
                                   ),
                                 ),
                                 const SizedBox(width: 18),
-                                Text(
-                                  _data['scores'][index]["fullname"],
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 14.0,
-                                    fontFamily: "Poppins",
-                                    fontWeight: FontWeight.normal,
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        _data['scores'][index]["fullname"],
+                                        style: const TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 14.0,
+                                          fontFamily: "Poppins",
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                      Text(
+                                        _data['scores'][index]["prev_school"] +
+                                            'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+                                        style: const TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 14.0,
+                                          fontFamily: "Poppins",
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                        maxLines: 2,
+                                      ),
+                                    ],
                                   ),
                                 ),
-                                const SizedBox(width: 12),
-                                Text(
-                                  "●",
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 14.0,
-                                    fontFamily: "Poppins",
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                                ),
-                                const SizedBox(width: 12),
-                                Text(
-                                  _data['scores'][index]["prev_school"],
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 14.0,
-                                    fontFamily: "Poppins",
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                                ),
-                                const Spacer(),
+                                const SizedBox(width: 18),
                                 Container(
                                   width: 50,
                                   padding: const EdgeInsets.all(6),
@@ -159,6 +159,7 @@ class _LeaderboardState extends State<Leaderboard> {
                             ),
                           ),
                     ),
+                const SizedBox(height: 35),
               ],
             ),
           ),

@@ -124,13 +124,16 @@ class _FormPendaftaranState extends State<FormPendaftaran> {
 
       if (responseData['error']?.isNotEmpty ?? false) {
         final errorMessageText = responseData['error'] ?? "";
-        final errorFieldsText = (responseData['fields'] as Map<String, dynamic>)
-            .map(
-              (fieldName, fieldErrors) =>
-                  MapEntry(fieldName, "• ${fieldErrors[0]}"),
-            )
-            .values
-            .join("\n");
+        final errorFieldsText =
+            responseData['fields'] != null
+                ? (responseData['fields'] as Map<String, dynamic>)
+                    .map(
+                      (fieldName, fieldErrors) =>
+                          MapEntry(fieldName, "• ${fieldErrors[0]}"),
+                    )
+                    .values
+                    .join("\n")
+                : "";
 
         showDialog(
           context: context,
