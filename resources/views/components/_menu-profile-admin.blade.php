@@ -6,6 +6,9 @@
             <span></span>
         </div>
         <div class="floating">
+            <a href="{{ route('admin.dashboard') }}"><img src="{{ asset("icons/dashboard.svg") }}" alt="profile admin">
+                <p>Halaman Utama</p>
+            </a>
             <a href=""><img src="{{ asset("icons/profile.svg") }}" alt="profile admin">
                 <p>Profile</p>
             </a>

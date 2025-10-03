@@ -12,8 +12,8 @@ use App\Http\Requests\UpdateCandidateRequest;
 use App\Models\Grade;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Request;
 use Symfony\Component\Console\Input\Input;
 use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
 
@@ -22,14 +22,19 @@ class CandidateController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         if (!Auth::check()) {
             return redirect()->route("index", ["title" => "Selamat Datang Di SMK TIN"]);
         }
-
-        $candidates = Candidate::all();
-        return view("admin/candidates", ["title" => "Daftar Calon Peserta Didik | TIN","id_css" => "calonphp","candidates" => $candidates]);
+        $candidates = Candidate::select(['*']);
+        $currentSearch = $request->get('search', '');
+        if($currentSearch){
+            $candidates = $candidates->where('nik', '=', $currentSearch)
+                ->orWhere('fullname', 'like', '%'. $currentSearch .'%');
+        }
+        $candidates = $candidates->get();
+        return view("admin/candidates", ["title" => "Daftar Calon Peserta Didik | TIN","id_css" => "calonphp","candidates" => $candidates, 'currentSearch' => $currentSearch]);
     }
 
     public function leaderboard(){
@@ -94,6 +99,9 @@ class CandidateController extends Controller
             $is_success = $candidate->save();
 
             if ($is_success) {
+                if(Auth::check()){
+                    return redirect()->to('/admin/candidates')->with(['message' => 'Berhasil Mendaftarkan Calon Peserta Didik']);
+                }
                 return view('registered')->with(["title" => "Pendaftaran Berhasil | TIN","terdaftar" => true, "fullname" => $candidate["fullname"], "email" => $candidate["email"]]);
             } else {
                 return redirect()->back()->withInput($request->all())->withErrors(["Pendaftaran gagal disimpan!"]);
@@ -110,7 +118,7 @@ class CandidateController extends Controller
     {
         $isSuccess = $candidate->update($request->validated());
         if ($isSuccess) {
-            return redirect()->back()->withInput(["message" => "Data calon siswa berhasil diperbarui!"]);
+            return redirect()->back()->with(["message" => "Data calon siswa berhasil diperbarui!"]);
         } else {
             return redirect()->back()->withErrors(["Data gagal diperbarui!"]);
         }
@@ -127,7 +135,7 @@ class CandidateController extends Controller
 
         $isSuccess = $candidate->delete();
         if ($isSuccess) {
-            return redirect()->back()->withInput(["message" => "Data calon siswa berhasil dihapus!"]);
+            return redirect()->to('/admin/candidates')->with((["message" => "Data calon siswa berhasil dihapus!"]));
         } else {
             return redirect()->back()->withErrors(["Data gagal dihapus!"]);
         }

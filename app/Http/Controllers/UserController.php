@@ -15,9 +15,10 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::all(['id', 'name', 'email']);
+        $users = User::select([ 'id', 'name', 'email' ]);
+        $users->get();
         return view('admin.users', ['users' => $users]);
     }
 

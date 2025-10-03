@@ -32,7 +32,7 @@ class AdminController extends Controller
             $request->session()->regenerate();
             return redirect()->route('admin.dashboard');
         } else {
-            return redirect()->back()->withErrors(['Email atau password salah']);
+            return redirect()->back()->withErrors(['Email atau password salah'])->withInput($request->all());
         }
     }
 

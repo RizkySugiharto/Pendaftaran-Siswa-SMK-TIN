@@ -12,11 +12,11 @@
     <h2>SIGN IN</h2>
     <div class="inputgroup">
         <label for="email">Email</label>
-        <input type="email" name="email" id="email">
+        <input type="email" name="email" id="email" value="{{ old('email', '') }}" required>
     </div>
     <div class="inputgroup">
         <label for="password">Password</label>
-        <input type="password" name="password" id="password">
+        <input type="password" name="password" id="password" value="{{ old('password','') }}" required>
     </div>
     <input type="submit" value="Login" class="button">
     <a href="#">Butuh Bantuan?</a>

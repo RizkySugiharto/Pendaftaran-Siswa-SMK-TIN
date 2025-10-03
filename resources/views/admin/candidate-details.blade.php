@@ -208,7 +208,21 @@
         </div>
         <button type="submit" id="submit_grades">UPDATE NILAI</button>
     </form>
+    <br>
+    <form class="card-detail"" action="{{ route('candidates.destroy', ['candidate' => $candidate->nik]) }}" method="post">
+        @csrf
+        @method('DELETE')
+        <input type="hidden" name="nik" value="{{ $candidate->nik }}" readonly>
+        <button type="button" id="btn_delete_data" value="{{ $candidate->fullname }}">HAPUS DATA</button>
+    </form>
 </main>
+<script defer>
+    document.getElementById('btn_delete_data').addEventListener('click', (e) => {
+        if(confirm(`apakah yakin ingin menghapus calon peserta didik dengan nama ${e.target.value}?`)){
+            e.target.parentElement.submit();
+        }
+    });
+</script>
 @includeWhen($errors->any(), 'components._error-message')
 @includeWhen(Session::has("message"),'components._success-message')
 @include("components._footer-admin")

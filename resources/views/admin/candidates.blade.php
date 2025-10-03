@@ -36,11 +36,10 @@
         <div class="table">
             <div class="tableopening">
                 <p>Data calon peserta didik <br>2026</p>
-                <div class="search">
-                    <button><img src="{{ asset("icons/filter.svg")  }}" alt=""></button>
-                    <input type="text">
+                <form class="search">
+                    <input type="text" name="search" id="search" value="{{ $currentSearch ?? '' }}">
                     <button> <img src="{{ asset("icons/search.svg")  }}" alt=""></button>
-                </div>
+                </form>
             </div>
             <div class="tablecontent">
                 <div class="tablewrapper">
@@ -75,5 +74,6 @@
         </div>
     </div>
 </div>
-
+@includeWhen($errors->any(), 'components._error-message')
+@includeWhen(Session::has("message"),'components._success-message')
 @include("components._footer-admin")

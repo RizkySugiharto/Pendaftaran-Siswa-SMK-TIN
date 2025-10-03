@@ -635,6 +635,7 @@ body
     border: none;
     width: 80%;
     color: #000;
+    padding: 10px;
     background-color: #fff;
 }
 #calonphp .content .table .tablecontent {
