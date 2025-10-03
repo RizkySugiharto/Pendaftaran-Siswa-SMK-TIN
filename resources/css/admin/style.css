@@ -137,7 +137,7 @@ body
 .navbar
 {
     display: flex;
-    justify-content: space-between;
+    justify-content: end;
     align-items: center;
     padding: 10px 15px;
     background-color: #f1f1f1;
@@ -189,7 +189,7 @@ body
     z-index: 2;
     position: fixed;
     width: 250px;
-    height: 250px;
+    height: max-content;
     background-color: #fff;
     box-shadow: 0 0 5px 1px #00000038;
     border-radius: 10px;
@@ -318,11 +318,12 @@ body
 .below .Csidebar .sidebar .container .options label
 {
     color: #fff;
-    font-weight: 300;
+    font-weight: 500;
     cursor: pointer;
 }
 .below .Csidebar .sidebar .container .options img
 {
+    filter: brightness(0) saturate(100%) invert(100%) sepia(22%) saturate(0%) hue-rotate(189deg) brightness(104%) contrast(103%);
     width: 25px;
     cursor: pointer;
     aspect-ratio: 1/1;
@@ -343,14 +344,14 @@ body
 {
     color: var(--primary);
     cursor: pointer;
-    font-weight: 300;
+    font-weight: 500;
 }
 .below .Csidebar .sidebar .container .options-s img
 {
     width: 25px;
     cursor: pointer;
     aspect-ratio: 1/1;
-    
+    filter: brightness(0) saturate(100%) invert(13%) sepia(97%) saturate(2821%) hue-rotate(204deg) brightness(92%) contrast(102%);
 }
 
 .below .content

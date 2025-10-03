@@ -3,6 +3,17 @@
 <div class="below">
     @include("components._side-bar-admin")
     <div class="content">
+        <style>
+            .row p
+            {
+                color: #003F8F;
+                font-weight: 500;
+            }
+            .row:hover
+            {
+                background-color: #edededff;
+            }
+        </style>
         <div class="upper">
         <div class="counter">
             <div>
@@ -43,19 +54,10 @@
                         <p>Minat Jurusan</p>
                     </div>
                     <div class="bottom">
-                        <!-- <div class="row">
-                            <p>001</p>
-                            <p>917498172984</p>
-                            <p>Wildan Izhar Al Haqq</p>
-                            <p>9/11/2025</p>
-                            <p>Female</p>
-                            <p>wildan@gmail.com</p>
-                            <p>08123456789</p>
-                            <p>RPL, DKV, TKJ</p>
-                        </div> -->
                         @foreach ($candidates as $candidate )
-                             <div class="row">
-                            <p><a href="candidates/{{ $candidate->nik }}" style="text-decoration:underline">{{ $candidate->nik }}</a></p>
+                        <a href="candidates/{{ $candidate->nik }}">    
+                        <div class="row">
+                            <p>{{ $candidate->nik }}</p>
                             <p>{{ $candidate->fullname }}</p>
                             <p>{{ explode(" ", $candidate->birth_date)[0] }}</p>
                             <p>{{ $candidate->gender }}</p>
@@ -63,6 +65,7 @@
                             <p>{{ $candidate->no_telp }}</p>
                             <p>{{ $candidate->major }}</p>
                         </div>
+                        </a>
                         @endforeach
                     </div>
                 </div>
