@@ -1,9 +1,7 @@
-:root
-{
-    --primary: #003F8F;
+:root {
+    --primary: #003f8f;
 }
-*
-    {
+* {
     -webkit-user-select: none;
     -ms-user-select: none;
     user-select: none;
@@ -12,42 +10,35 @@
     font-family: inter;
     scrollbar-width: none !important;
     scrollbar-color: unset !important;
-    transition: .2s;
-    }
+    transition: 0.2s;
+}
 
-a
-    {
+a {
     color: var(--primary);
     text-decoration: none;
     font-weight: bold;
-    }
+}
 
-p
-    {
+p {
     color: #000000;
     font-family: inter;
-    }
+}
 
-h1
-    {
+h1 {
     color: #000000;
     font-family: inter;
-    }
+}
 
-body
-    {
+body {
     height: 100vh;
     width: 100vw;
     background-color: #ffffff;
-    display:flex;
+    display: flex;
     flex-direction: column;
     gap: 20px;
-    }
+}
 
-
-
-.button
-    {
+.button {
     background-color: var(--primary);
     color: #ffffff;
     width: max-content;
@@ -60,15 +51,13 @@ body
     cursor: pointer;
     outline: 2px solid var(--primary);
     text-align: center;
-    }
+}
 
-    .button:hover
-    {
+.button:hover {
     filter: brightness(1.2);
 }
 
-.button2
-    {
+.button2 {
     background-color: #fff;
     color: var(--primary);
     border: none;
@@ -80,15 +69,13 @@ body
     cursor: pointer;
     text-align: center;
     outline: 2px solid #ffffff;
-    }
+}
 
-.button2:hover
-{
+.button2:hover {
     filter: brightness(0.8);
 }
 
-.button3
-    {
+.button3 {
     display: flex;
     justify-content: space-between;
     background-color: #ffffff;
@@ -104,8 +91,7 @@ body
     text-align: center;
 }
 
-.button4
-{
+.button4 {
     background-color: #ffffff00;
     text-align: center;
     outline: 2px solid #ffffff;
@@ -117,25 +103,22 @@ body
     padding-left: 15px;
     padding-right: 15px;
     cursor: pointer;
-    }
+}
 
-.logo
-    {
+.logo {
     font-family: Croc, "Coming Soon";
     font-weight: 500;
     color: #ffffff;
     opacity: 0;
-    }
+}
 
-.Cnavbar
-{
+.Cnavbar {
     width: 100vw;
     min-height: 100px;
     position: relative;
 }
 
-.navbar
-{
+.navbar {
     display: flex;
     justify-content: end;
     align-items: center;
@@ -149,23 +132,19 @@ body
     left: 0;
 }
 
-.navbar input
-{
+.navbar input {
     display: none;
 }
-.navbar .profile
-{
+.navbar .profile {
     position: relative;
     width: 50px;
     height: 50px;
 }
-.navbar .profile img
-{
+.navbar .profile img {
     width: 100%;
     position: absolute;
 }
-.navbar .profile span
-{
+.navbar .profile span {
     background-color: #008f21;
     width: 30%;
     height: 30%;
@@ -174,18 +153,15 @@ body
     bottom: 5px;
     right: 5px;
 }
-.navbar .profile:hover ~ .floating
-{
+.navbar .profile:hover ~ .floating {
     display: flex;
 }
 
-.navbar .floating:hover
-{
+.navbar .floating:hover {
     display: flex;
 }
-.navbar .floating
-{
-    transition: .1s ease-in-out;
+.navbar .floating {
+    transition: 0.1s ease-in-out;
     z-index: 2;
     position: fixed;
     width: 250px;
@@ -198,8 +174,7 @@ body
     right: 10px;
     top: 10px;
 }
-.navbar .floating a
-{
+.navbar .floating a {
     border-radius: 10px;
     display: flex;
     height: 25%;
@@ -209,12 +184,10 @@ body
     align-items: center;
     gap: 20px;
 }
-.navbar .floating a:hover
-{
+.navbar .floating a:hover {
     background-color: #f1f1f1;
 }
-.navbar .floating a img
-{
+.navbar .floating a img {
     background-color: #f1f1f1;
     position: relative;
     border-radius: 10px;
@@ -222,59 +195,49 @@ body
     padding: 5px;
     box-sizing: border-box;
 }
-.navbar .floating a p:hover ~ img
-{
+.navbar .floating a p:hover ~ img {
     background-color: #fff;
 }
-.navbar .floating a p
-{
+.navbar .floating a p {
     width: calc(80% - 20px);
     font-weight: 400;
     color: #000;
 }
 
 .navbar .left,
-.navbar .right 
-{
+.navbar .right {
     display: flex;
     align-content: center;
 }
-.navbar .left
-{
+.navbar .left {
     display: flex;
     align-items: center;
     gap: 20px;
 }
-.navbar .left p:hover
-{
+.navbar .left p:hover {
     border-bottom: 5px solid var(--primary);
 }
-.navbar .left a p
-{
+.navbar .left a p {
     font-weight: 500;
     color: var(--primary);
 }
-.navbar .right
-{
+.navbar .right {
     align-items: center;
     gap: 20px;
 }
 
-.below
-{
+.below {
     height: 100%;
     width: 100vw;
     box-sizing: border-box;
     display: flex;
 }
-.below .Csidebar
-{
+.below .Csidebar {
     width: 20%;
     min-width: 260px;
     height: 100%;
 }
-.below .Csidebar .sidebar
-{
+.below .Csidebar .sidebar {
     top: 0;
     left: 0;
     z-index: 2;
@@ -285,8 +248,7 @@ body
     position: fixed;
     box-sizing: border-box;
 }
-.below .Csidebar .sidebar .container
-{
+.below .Csidebar .sidebar .container {
     width: 100%;
     height: 100%;
     border-radius: 20px;
@@ -298,39 +260,34 @@ body
     flex-direction: column;
     gap: 10px;
 }
-.below .Csidebar .sidebar .container input
-{
+.below .Csidebar .sidebar .container input {
     display: none;
     align-self: flex-end;
     width: 25px;
     height: 25px;
 }
-.below .Csidebar .sidebar .container .options
-{
+.below .Csidebar .sidebar .container .options {
     display: flex;
     padding: 10px;
     box-sizing: border-box;
-    background-color:var(--primary);
+    background-color: var(--primary);
     align-items: center;
     gap: 20px;
     border-radius: 8px;
 }
-.below .Csidebar .sidebar .container .options label
-{
+.below .Csidebar .sidebar .container .options label {
     color: #fff;
     font-weight: 500;
     cursor: pointer;
 }
-.below .Csidebar .sidebar .container .options img
-{
-    filter: brightness(0) saturate(100%) invert(100%) sepia(22%) saturate(0%) hue-rotate(189deg) brightness(104%) contrast(103%);
+.below .Csidebar .sidebar .container .options img {
+    filter: brightness(0) saturate(100%) invert(100%) sepia(22%) saturate(0%)
+        hue-rotate(189deg) brightness(104%) contrast(103%);
     width: 25px;
     cursor: pointer;
     aspect-ratio: 1/1;
-    
 }
-.below .Csidebar .sidebar .container .options-s
-{
+.below .Csidebar .sidebar .container .options-s {
     display: flex;
     padding: 10px;
     box-sizing: border-box;
@@ -340,22 +297,20 @@ body
     gap: 20px;
     border-radius: 8px;
 }
-.below .Csidebar .sidebar .container .options-s label
-{
+.below .Csidebar .sidebar .container .options-s label {
     color: var(--primary);
     cursor: pointer;
     font-weight: 500;
 }
-.below .Csidebar .sidebar .container .options-s img
-{
+.below .Csidebar .sidebar .container .options-s img {
     width: 25px;
     cursor: pointer;
     aspect-ratio: 1/1;
-    filter: brightness(0) saturate(100%) invert(13%) sepia(97%) saturate(2821%) hue-rotate(204deg) brightness(92%) contrast(102%);
+    filter: brightness(0) saturate(100%) invert(13%) sepia(97%) saturate(2821%)
+        hue-rotate(204deg) brightness(92%) contrast(102%);
 }
 
-.below .content
-{
+.below .content {
     width: 80%;
     height: max-content;
     padding: 20px 0 0 0;
@@ -364,8 +319,7 @@ body
     flex-wrap: wrap;
     gap: 10px;
 }
-.below .content .widgets
-{
+.below .content .widgets {
     box-sizing: border-box;
     background-color: #f1f1f1;
     width: calc(100% - 5px);
@@ -375,8 +329,7 @@ body
     gap: 1vw;
     border-radius: 10px;
 }
-.below .content .widgets div
-{
+.below .content .widgets div {
     width: 100%;
     height: 100%;
     border-radius: 10px;
@@ -389,27 +342,21 @@ body
     justify-content: center;
     text-align: center;
 }
-.below .content .widgets div img
-{
+.below .content .widgets div img {
     width: 10vw;
 }
-.below .content .widgets div h3
-{
+.below .content .widgets div h3 {
     font-weight: 400;
     font-size: 1vw;
 }
-.below .content .widgets div h2
-{
+.below .content .widgets div h2 {
     font-weight: 500;
     font-size: 1.1vw;
 }
-.below .content .widgets div h1
-{
+.below .content .widgets div h1 {
     font-size: 2vw;
-    
 }
-.below .content .calendar
-{
+.below .content .calendar {
     background-color: #fff;
     margin-bottom: 15px;
     border-radius: 15px;
@@ -420,18 +367,111 @@ body
     flex-direction: column;
     height: 400px;
 }
-.below .content .calendar p
-{
+.below .content .calendar p {
     padding: 15px;
-    
 }
-.below .content .calendar h3
-{
-    padding: 15px;
-    align-self: center;
+
+.below .content .header-calendar {
+    display: flex;
+    align-items: center;
+    padding: 0 30px;
+    justify-content: space-between;
+    box-sizing: border-box;
 }
-.below .content .something
-{
+
+.below .content .current-date {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.below .content .calendar img {
+    filter: brightness(0) saturate(100%) invert(17%) sepia(78%) saturate(2167%)
+        hue-rotate(201deg) brightness(96%) contrast(104%);
+    width: 20px;
+    cursor: pointer;
+}
+.below .content .icons-calendar {
+    display: flex;
+}
+.below .content .icons-calendar span {
+    box-sizing: border-box;
+    height: 38px;
+    width: 38px;
+    margin: 0 1px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.below .content .icons-calendar span:hover {
+    background: #f2f2f2;
+}
+.below .content .icons-calendar span:last-child {
+    margin-right: -10px;
+}
+
+.below .content .calendar-items {
+    display: flex;
+    flex-direction: column;
+}
+
+.below .content .calendar-items div {
+    display: flex;
+    flex-wrap: wrap;
+    text-align: center;
+}
+
+.below .content .calendar-items label {
+    width: calc(100% / 7);
+    position: relative;
+    justify-content: center;
+}
+
+.below .content .calendar-items .weeks {
+    font-weight: bold;
+    line-height: 20px;
+}
+
+.below .content .calendar-items .days label {
+    z-index: 999999;
+    margin-top: 30px;
+    cursor: pointer;
+}
+
+.below .content .calendar-items .days label.inactive-days {
+    color: #aaa;
+}
+
+.below .content .calendar-items .days label.active-days {
+    color: #fff;
+}
+
+.below .content .calendar-items div label:nth-child(7n + 1) {
+    color: red;
+}
+
+.below .content .calendar-items .days label:before {
+    display: flex;
+    position: absolute;
+    content: "";
+    height: 50px;
+    width: 50px;
+    z-index: -1;
+    border-radius: 50%;
+    top: -15px;
+    left: 27%;
+}
+.below .content .days label:hover:before {
+    background: #f2f2f2;
+}
+
+.below .content .calendar-items .days label.active-days:before {
+    background: var(--primary);
+    color: #fff;
+}
+
+.below .content .something {
     background-color: #fff;
     margin-bottom: 15px;
     border-radius: 15px;
@@ -443,8 +483,7 @@ body
     height: 400px;
 }
 
-#loginphp .blue
-{
+#loginphp .blue {
     clip-path: polygon(100% 0, 0 0, 100% 100%);
     position: absolute;
     right: 0;
@@ -452,11 +491,10 @@ body
     width: 100vw;
     height: 100vh;
     z-index: -1;
-    background-color:#fff;
+    background-color: #fff;
 }
-#loginphp body
-{
-    background-color:#003F8F;
+#loginphp body {
+    background-color: #003f8f;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -464,8 +502,7 @@ body
     overflow: hidden;
     box-sizing: border-box;
 }
-#loginphp form
-{
+#loginphp form {
     box-shadow: 0 0 10px 1px #003e8f6b;
     background-color: #fff;
     box-sizing: border-box;
@@ -480,8 +517,7 @@ body
     width: 30vw;
     gap: 30px;
 }
-#loginphp form .imagegroup
-{
+#loginphp form .imagegroup {
     width: 100%;
     height: 10%;
     display: flex;
@@ -489,22 +525,18 @@ body
     justify-content: space-between;
     overflow: hidden;
 }
-#loginphp form .imagegroup img
-{
+#loginphp form .imagegroup img {
     width: 50%;
 }
-#loginphp form .inputgroup
-{
+#loginphp form .inputgroup {
     display: flex;
     flex-direction: column;
     gap: 5px;
 }
-#loginphp form .inputgroup label
-{
+#loginphp form .inputgroup label {
     font-weight: 300;
 }
-#loginphp form .inputgroup input
-{
+#loginphp form .inputgroup input {
     height: 40px;
     outline: none;
     border: 1px solid #000;
@@ -514,33 +546,27 @@ body
     box-sizing: border-box;
     padding: 10px;
 }
-#loginphp form input[type="submit"]
-{
+#loginphp form input[type="submit"] {
     align-self: center;
     padding: 10px 80px;
 }
 
-#calonphp .content
-{
+#calonphp .content {
     height: max-content;
     padding: 10px;
     box-sizing: border-box;
 }
-#calonphp .content .upper
-{
+#calonphp .content .upper {
     display: flex;
     flex-direction: row;
     width: 100%;
     justify-content: space-between;
     align-content: center;
 }
-#calonphp .content .upper a
-{
+#calonphp .content .upper a {
     align-content: end;
-
 }
-#calonphp .content .counter
-{
+#calonphp .content .counter {
     background-color: #fff;
     box-shadow: 0 0 5px 1px #0000002c;
     display: flex;
@@ -549,9 +575,8 @@ body
     box-sizing: border-box;
 }
 
-#calonphp .content .counter-button
-{
-    background-color: #003F8F;
+#calonphp .content .counter-button {
+    background-color: #003f8f;
     color: #fff;
     box-shadow: 0 0 5px 1px #0000002c;
     display: flex;
@@ -561,31 +586,24 @@ body
     padding: 10px;
     font-size: 12px;
     margin-left: 10px;
-    
 }
-#calonphp .content .counter-button h3
-{
+#calonphp .content .counter-button h3 {
     font-weight: 400 !important;
-
 }
-#calonphp .content .counter div
-{
+#calonphp .content .counter div {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     padding: 0 10px 0 0;
 }
-#calonphp .content .counter div img
-{
+#calonphp .content .counter div img {
     width: 70px;
 }
-#calonphp .content .counter div h3
-{
+#calonphp .content .counter div h3 {
     font-weight: 300;
     padding: 5px;
 }
-#calonphp .content .counter div p
-{
+#calonphp .content .counter div p {
     padding: 5px;
     text-align: end;
 }
@@ -645,7 +663,7 @@ body
 }
 
 #calonphp .content .table .tablewrapper {
-    min-width: 1000px; 
+    min-width: 1000px;
 }
 
 #calonphp .content .table .top,
@@ -668,28 +686,21 @@ body
     height: 10px;
 }
 
-
-
-@media only screen and (max-width: 768px) 
-{
-    .navbar .profile
-    {
+@media only screen and (max-width: 768px) {
+    .navbar .profile {
         display: none;
     }
-    .navbar input
-    {
+    .navbar input {
         display: block;
         width: 50px;
         height: 50px;
     }
-    .below .Csidebar
-    {
+    .below .Csidebar {
         width: 0;
         min-width: 0;
         height: 100%;
     }
-    .below .Csidebar .sidebar
-    {
+    .below .Csidebar .sidebar {
         display: none;
         top: 70px;
         left: 0;
@@ -699,109 +710,80 @@ body
         position: fixed;
         box-sizing: border-box;
     }
-    .below .Csidebar .sidebar .container
-    {
+    .below .Csidebar .sidebar .container {
         border-radius: 0;
     }
-    .below .Csidebar .sidebar img
-    {
+    .below .Csidebar .sidebar img {
         width: 100px;
     }
-    .below .content
-    {
+    .below .content {
         justify-content: center;
         width: 100%;
         padding: 10px;
         box-sizing: border-box;
         flex-direction: column;
-        
     }
-    .below .content .widgets
-    {
+    .below .content .widgets {
         flex-wrap: wrap;
         justify-items: center;
         align-items: center;
         width: 100%;
         height: 100vw;
     }
-    .below .content .widgets div
-    {
-        width: calc(50% - .5vw);
-        height: calc(50% - .5vw);
-        
+    .below .content .widgets div {
+        width: calc(50% - 0.5vw);
+        height: calc(50% - 0.5vw);
     }
-    .below .content .widgets div img
-    {
+    .below .content .widgets div img {
         width: 25vw;
     }
-    .below .content .widgets div h3
-    {
+    .below .content .widgets div h3 {
         font-size: 3vw;
     }
-    .below .content .widgets div h2
-    {
+    .below .content .widgets div h2 {
         font-size: 3vw;
-        
     }
-    .below .content .widgets div h1
-    {
+    .below .content .widgets div h1 {
         font-size: 5vw;
-        
     }
-    .below .content .calendar
-    {
+    .below .content .calendar {
         width: 100%;
     }
-    .below .content .something
-    {
+    .below .content .something {
         width: 100%;
     }
-    .navbar .floating
-    {
+    .navbar .floating {
         left: 10px;
         top: 10px;
     }
-    
-    #loginphp form
-    {
+
+    #loginphp form {
         width: 60vw;
         min-width: 300px;
     }
 
-
-
-
-
-
-
-
     #calonphp .content .table .tablecontent {
-    width: 100%;
-    max-width: 100vw;
-    max-height: 400px;
-    overflow: auto;
-    background-color: #f1f1f1;
+        width: 100%;
+        max-width: 100vw;
+        max-height: 400px;
+        overflow: auto;
+        background-color: #f1f1f1;
     }
     #calonphp .content .table .tablecontent .tablewrapper {
         width: 1000px;
     }
-    #calonphp .content .table .tablecontent .top
-    {
+    #calonphp .content .table .tablecontent .top {
         padding: 10px 10px;
         width: 100%;
     }
-    #calonphp .content .table .tablecontent .bottom
-    {
+    #calonphp .content .table .tablecontent .bottom {
         width: 100%;
     }
-    
-    #calonphp .content .table .tableopening p
-    {
+
+    #calonphp .content .table .tableopening p {
         font-size: 1rem;
     }
-    #calonphp .content .table .tableopening .search
-    {
+    #calonphp .content .table .tableopening .search {
         display: none;
     }
-    
 }
