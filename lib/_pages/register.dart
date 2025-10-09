@@ -1,6 +1,7 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:nik_validator/nik_validator.dart';
 import 'package:ppdb_smk_tin/_components/header_content.dart';
 import 'package:ppdb_smk_tin/_components/button.dart';
@@ -123,6 +124,7 @@ class _FormPendaftaranState extends State<FormPendaftaran> {
       if (!mounted) return;
 
       if (responseData['error']?.isNotEmpty ?? false) {
+        print(responseData);
         final errorMessageText = responseData['error'] ?? "";
         final errorFieldsText =
             responseData['fields'] != null
@@ -225,30 +227,39 @@ class _FormPendaftaranState extends State<FormPendaftaran> {
                 hintText: "Masukkan 16 angka",
                 controller: _textControllers["nik"],
                 isRequired: true,
+                maxLength: 16,
+                keyboardType: TextInputType.number,
               ),
               _TextFieldWidget(
                 labelText: "Nama Lengkap",
                 hintText: "Masukkan nama lengkap Anda",
                 controller: _textControllers["fullname"],
                 isRequired: true,
+                maxLength: 255,
               ),
-              _TextFieldWidget(
+              _DateFieldWidget(
                 labelText: "Tanggal Lahir",
                 hintText: "2008/07/31",
                 controller: _textControllers["birth_date"],
                 isRequired: true,
+                minDate: DateTime.now().subtract(Duration(days: 365 * 18)),
+                maxDate: DateTime.now().subtract(Duration(days: 365 * 14 + 4)),
               ),
               _TextFieldWidget(
                 labelText: "Email",
                 hintText: "johndoe@gmail.com",
                 controller: _textControllers["email"],
                 isRequired: true,
+                maxLength: 255,
+                keyboardType: TextInputType.emailAddress,
               ),
               _TextFieldWidget(
                 labelText: "Nomor Telepon",
                 hintText: "081212120123",
                 controller: _textControllers["no_telp"],
                 isRequired: true,
+                maxLength: 12,
+                keyboardType: TextInputType.phone,
               ),
               _TextFieldWidget(
                 labelText: "Alamat",
@@ -284,17 +295,22 @@ class _FormPendaftaranState extends State<FormPendaftaran> {
                 hintText: "Masukkan nama wali murid Anda",
                 controller: _textControllers["parent_name"],
                 isRequired: true,
+                maxLength: 255,
               ),
               _TextFieldWidget(
                 labelText: "Email",
                 hintText: "Masukkan alamat email wali murid Anda",
                 controller: _textControllers["parent_email"],
+                maxLength: 255,
+                keyboardType: TextInputType.emailAddress,
               ),
               _TextFieldWidget(
                 labelText: "Nomor Telepon",
                 hintText: "Masukkan nomor telepon yang dapat dihubungi",
                 controller: _textControllers["parent_telp"],
                 isRequired: true,
+                maxLength: 12,
+                keyboardType: TextInputType.phone,
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15.0),
@@ -328,12 +344,16 @@ class _TextFieldWidget extends StatelessWidget {
   final String labelText;
   final bool isRequired;
   final String hintText;
+  final int? maxLength;
+  final TextInputType? keyboardType;
 
   const _TextFieldWidget({
     required this.labelText,
     required this.hintText,
     this.controller,
     this.isRequired = false,
+    this.maxLength,
+    this.keyboardType,
   });
 
   @override
@@ -377,8 +397,123 @@ class _TextFieldWidget extends StatelessWidget {
               focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: Color(0xFF003F8F)),
               ),
+              counterText: "",
             ),
             controller: controller,
+            maxLength: maxLength,
+            keyboardType: keyboardType,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _DateFieldWidget extends StatefulWidget {
+  final TextEditingController? controller;
+  final String labelText;
+  final bool isRequired;
+  final String hintText;
+  final DateTime? minDate;
+  final DateTime? maxDate;
+
+  const _DateFieldWidget({
+    required this.labelText,
+    required this.hintText,
+    this.controller,
+    this.isRequired = false,
+    this.minDate,
+    this.maxDate,
+  });
+
+  @override
+  State<_DateFieldWidget> createState() => __DateFieldWidgetState();
+}
+
+class __DateFieldWidgetState extends State<_DateFieldWidget> {
+  Future<void> _selectDate() async {
+    final dateNow = DateTime.now();
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: widget.minDate ?? dateNow,
+      firstDate: widget.minDate ?? DateTime(dateNow.year - 100),
+      lastDate: widget.maxDate ?? DateTime(dateNow.year + 100),
+    );
+
+    if (picked != null) {
+      setState(() {
+        widget.controller!.text = DateFormat('yyyy/MM/dd').format(picked);
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 4),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text.rich(
+            TextSpan(
+              text: widget.labelText,
+              style: TextStyle(
+                fontFamily: "Poppins",
+                fontSize: 16.0,
+                color: Colors.black,
+              ),
+              children: [
+                if (widget.isRequired)
+                  WidgetSpan(
+                    child: Text(
+                      "*",
+                      style: TextStyle(
+                        fontFamily: "Poppins",
+                        fontSize: 18,
+                        color: Color(0xFF003F8F),
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 4),
+          GestureDetector(
+            onTap: _selectDate,
+            child: Container(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 12.0,
+                vertical: 4.0,
+              ),
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.black54),
+                borderRadius: BorderRadius.circular(4.0),
+              ),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      decoration: InputDecoration(
+                        hintText: widget.hintText,
+                        hintStyle: TextStyle(
+                          fontSize: 16.0,
+                          color: Colors.grey,
+                        ),
+                        border: InputBorder.none,
+                      ),
+                      controller: widget.controller,
+                      enabled: false,
+                      style: TextStyle(fontSize: 16.0, color: Colors.black),
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Icon(Icons.calendar_month_outlined, size: 25),
+                  ),
+                ],
+              ),
+            ),
           ),
         ],
       ),

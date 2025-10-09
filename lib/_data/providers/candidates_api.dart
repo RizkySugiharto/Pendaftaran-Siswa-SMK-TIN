@@ -19,6 +19,7 @@ class CandidatesApi {
       } else {
         return HashMap.from({
           'error': response.data?['error'] ?? 'Something went wrong !',
+          'fields': response.data?['fields'],
         });
       }
     } catch (e) {

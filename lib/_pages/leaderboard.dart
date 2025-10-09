@@ -119,8 +119,7 @@ class _LeaderboardState extends State<Leaderboard> {
                                         ),
                                       ),
                                       Text(
-                                        _data['scores'][index]["prev_school"] +
-                                            'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+                                        _data['scores'][index]["prev_school"],
                                         style: const TextStyle(
                                           color: Colors.black,
                                           fontSize: 14.0,
