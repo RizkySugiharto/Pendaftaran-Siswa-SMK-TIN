@@ -10,6 +10,9 @@ use App\Models\Candidate;
 use App\Http\Requests\StoreCandidateRequest;
 use App\Http\Requests\UpdateCandidateRequest;
 use App\Models\Grade;
+use Carbon\Carbon;
+use DateInterval;
+use DateTime;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
@@ -19,6 +22,12 @@ use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
 
 class CandidateController extends Controller
 {
+    private array $initialRegisterDate = [
+        'month' => 3,
+        'day' => 12,
+    ];
+    private int $maxRegisterDays = 30 * 3; // 30 * n --> n = month(s)
+
     /**
      * Display a listing of the resource.
      */
@@ -27,18 +36,44 @@ class CandidateController extends Controller
         if (!Auth::check()) {
             return redirect()->route("index", ["title" => "Selamat Datang Di SMK TIN"]);
         }
-        $candidates = Candidate::select(['*']);
+
+        $candidates = Candidate::query();
         $currentSearch = $request->get('search', '');
-        if($currentSearch){
-            $candidates = $candidates->where('nik', '=', $currentSearch)
-                ->orWhere('fullname', 'like', '%'. $currentSearch .'%');
-        }
-        $candidates = $candidates->get();
+
+        $candidates = $candidates
+            ->when($currentSearch, function ($query) use ($currentSearch) {
+                return $query
+                    ->where('nik', 'like', "%$currentSearch%")
+                    ->orWhere('fullname', 'like', "%$currentSearch%");
+            })
+            ->get();
+
         return view("admin/candidates", ["title" => "Daftar Calon Peserta Didik | TIN","id_css" => "calonphp","candidates" => $candidates, 'currentSearch' => $currentSearch]);
     }
 
     public function leaderboard(){
-        $data = Grade::selectRaw("candidates.fullname, candidates.prev_school, CAST(AVG(value) AS UNSIGNED) AS avg_value")->join('candidates', 'candidates.nik', '=', 'grades.nik')->groupBy('candidates.nik')->orderBy("avg_value","desc")->limit(200)->get();
+        $minDate = Carbon::create(
+            now()->year,
+            $this->initialRegisterDate['month'],
+            $this->initialRegisterDate['day'],
+            0, 0, 0
+        );
+        $maxDate = Carbon::create(
+            now()->year,
+            $this->initialRegisterDate['month'],
+            $this->initialRegisterDate['day'],
+            0, 0, 0
+        )->addDays($this->maxRegisterDays);
+
+        $data = Grade::query()
+            ->selectRaw("candidates.fullname, candidates.prev_school, CAST(AVG(value) AS UNSIGNED) AS avg_value")
+            ->join('candidates', 'candidates.nik', '=', 'grades.nik')
+            ->whereRaw('candidates.submit_date BETWEEN ? AND ?', [$minDate->format('Y-m-d'), $maxDate->format('Y-m-d')])
+            ->groupBy('candidates.nik')
+            ->orderBy("avg_value","desc")
+            ->limit(100)
+            ->get();
+
         return view("leaderboard", ["title" => "Leaderboard | Siswa SMK TIN", "data" => $data]);
     }
 
@@ -144,7 +179,7 @@ class CandidateController extends Controller
     /**
      * Display the specified resource in version of API.
      */
-    
+
     public function showAPI(Candidate $candidate)
     {
         $filtered = $candidate->only([
@@ -210,7 +245,28 @@ class CandidateController extends Controller
     * Show 100 Candidates From The Top Score
     */
     public function leaderboardAPI(){
-        $data = Grade::selectRaw("candidates.fullname, candidates.prev_school, CAST(AVG(value) AS UNSIGNED) AS avg_value")->join('candidates', 'candidates.nik', '=', 'grades.nik')->groupBy('candidates.nik')->orderBy("avg_value","desc")->limit(100)->get();
+        $minDate = Carbon::create(
+            now()->year,
+            $this->initialRegisterDate['month'],
+            $this->initialRegisterDate['day'],
+            0, 0, 0
+        );
+        $maxDate = Carbon::create(
+            now()->year,
+            $this->initialRegisterDate['month'],
+            $this->initialRegisterDate['day'],
+            0, 0, 0
+        )->addDays($this->maxRegisterDays);
+
+        $data = Grade::query()
+            ->selectRaw("candidates.fullname, candidates.prev_school, CAST(AVG(value) AS UNSIGNED) AS avg_value")
+            ->join('candidates', 'candidates.nik', '=', 'grades.nik')
+            ->whereRaw('candidates.submit_date BETWEEN ? AND ?', [$minDate->format('Y-m-d'), $maxDate->format('Y-m-d')])
+            ->groupBy('candidates.nik')
+            ->orderBy("avg_value","desc")
+            ->limit(100)
+            ->get();
+
         return response()->json($data);
     }
 }
