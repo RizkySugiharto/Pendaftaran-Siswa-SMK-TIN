@@ -194,6 +194,8 @@ class _FormPendaftaranState extends State<FormPendaftaran> {
 
   @override
   Widget build(BuildContext context) {
+    final currDate = DateTime.now();
+
     return Scaffold(
       appBar: HeaderContent(
         backAction: true,
@@ -242,8 +244,16 @@ class _FormPendaftaranState extends State<FormPendaftaran> {
                 hintText: "2008/07/31",
                 controller: _textControllers["birth_date"],
                 isRequired: true,
-                minDate: DateTime.now().subtract(Duration(days: 365 * 18)),
-                maxDate: DateTime.now().subtract(Duration(days: 365 * 14 + 4)),
+                minDate: DateTime(
+                  currDate.year - 18,
+                  currDate.month,
+                  currDate.day,
+                ),
+                maxDate: DateTime(
+                  currDate.year - 14,
+                  currDate.month,
+                  currDate.day,
+                ),
               ),
               _TextFieldWidget(
                 labelText: "Email",
