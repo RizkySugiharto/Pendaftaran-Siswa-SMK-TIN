@@ -126,7 +126,7 @@
             <img src="{{ asset('icons/icon-refresh.svg?fill=#003F8F') }}" alt="icon refresh">
             <p>Refresh</p>
         </a>
-        <p>Periode: 1 Januari - 18 Juni 2025</p>
+        <p>Periode: 12 September - 12 Desember 2025</p>
     </div>
     <table border="1">
         <thead>
