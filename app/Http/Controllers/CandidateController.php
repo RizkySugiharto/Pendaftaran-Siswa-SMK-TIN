@@ -23,7 +23,7 @@ use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
 class CandidateController extends Controller
 {
     private array $initialRegisterDate = [
-        'month' => 3,
+        'month' => 9,
         'day' => 12,
     ];
     private int $maxRegisterDays = 30 * 3; // 30 * n --> n = month(s)

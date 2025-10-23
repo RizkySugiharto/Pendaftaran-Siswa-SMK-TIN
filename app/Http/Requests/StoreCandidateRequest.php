@@ -9,7 +9,7 @@ class StoreCandidateRequest extends FormRequest
 {
 
     protected $minimumAge = 14;
-    protected $maximumAge = 18;
+    protected $maximumAge = 21;
 
     /**
      * Determine if the user is authorized to make this request.
